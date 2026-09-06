@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>CV Maker</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+*{
+ box-sizing:border-box;
+}
+
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#eef2f7;
+ color:#222;
+}
+
+header{
+ background:#172554;
+ color:white;
+ padding:20px;
+ text-align:center;
+}
+
+.container{
+ max-width:1100px;
+ margin:auto;
+ padding:15px;
+}
+
+.card{
+ background:white;
+ padding:20px;
+ margin-bottom:15px;
+ border-radius:12px;
+ box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+h2{
+ color:#172554;
+}
+
+label{
+ display:block;
+ margin-top:12px;
+ font-weight:bold;
+}
+
+input,textarea{
+ width:100%;
+ padding:12px;
+ margin-top:6px;
+ border:1px solid #ccc;
+ border-radius:7px;
+ font-size:15px;
+}
+
+textarea{
+ min-height:80px;
+}
+
+button{
+ border:0;
+ padding:12px 18px;
+ margin:5px;
+ border-radius:8px;
+ font-weight:bold;
+ cursor:pointer;
+}
+
+.generate{
+ background:#2563eb;
+ color:white;
+}
+
+.pdf{
+ background:#16a34a;
+ color:white;
+}
+
+.remove{
+ background:#dc2626;
+ color:white;
+}
+
+.template-grid{
+ display:grid;
+ grid-template-columns:repeat(5,1fr);
+ gap:8px;
+}
+
+.template{
+ border:2px solid #ddd;
+ padding:12px 5px;
+ text-align:center;
+ border-radius:8px;
+ cursor:pointer;
+}
+
+.template.active{
+ border-color:#2563eb;
+ background:#eff6ff;
+}
+
+.row{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:15px;
+}
+
+.photo-preview{
+ width:110px;
+ height:110px;
+ border-radius:50%;
+ object-fit:cover;
+ margin-top:10px;
+ display:none;
+}
+
+/* CV */
+
+#cv{
+ width:794px;
+ min-height:1123px;
+ background:white;
+ padding:45px;
+ margin:auto;
+}
+
+.cv-header{
+ display:flex;
+ align-items:center;
+ gap:25px;
+ padding-bottom:20px;
+ border-bottom:3px solid #172554;
+}
+
+.cv-photo{
+ width:120px;
+ height:120px;
+ object-fit:cover;
+ border-radius:50%;
+ display:none;
+}
+
+.cv-name{
+ font-size:32px;
+ font-weight:bold;
+}
+
+.cv-contact{
+ color:#555;
+ margin-top:8px;
+ line-height:1.7;
+}
+
+.section{
+ margin-top:25px;
+}
+
+.section h3{
+ color:#172554;
+ border-bottom:2px solid #172554;
+ padding-bottom:6px;
+}
+
+.cv-item{
+ margin:12px 0;
+}
+
+.title{
+ font-weight:bold;
+ font-size:17px;
+}
+
+.small{
+ color:#666;
+}
+
+.skill{
+ display:inline-block;
+ background:#eee;
+ padding:7px 11px;
+ border-radius:20px;
+ margin:4px;
+}
+
+/* Templates */
+
+.t2 .cv-header{
+ background:#172554;
+ color:white;
+ padding:25px;
+}
+
+.t2 .cv-contact{
+ color:white;
+}
+
+.t2 .section h3{
+ color:#172554;
+}
+
+.t3 .cv-header{
+ display:block;
+ text-align:center;
+ border:0;
+}
+
+.t3 .cv-photo{
+ margin:auto;
+}
+
+.t3 .cv-name{
+ color:#7c3aed;
+}
+
+.t3 .section h3{
+ color:#7c3aed;
+}
+
+.t4 .cv-header{
+ border-left:8px solid #16a34a;
+ padding-left:20px;
+}
+
+.t4 .section h3{
+ color:#16a34a;
+}
+
+.t5 .cv-header{
+ border-bottom-color:#dc2626;
+}
+
+.t5 .section h3{
+ color:#dc2626;
+}
+
+.t6 .cv-header{
+ border-bottom-color:#0891b2;
+}
+
+.t6 .section h3{
+ color:#0891b2;
+}
+
+.t7 .cv-header{
+ background:#111827;
+ color:white;
+ padding:25px;
+}
+
+.t7 .cv-contact{
+ color:white;
+}
+
+.t8 .cv-header{
+ border-top:8px solid #f59e0b;
+}
+
+.t8 .section h3{
+ color:#d97706;
+}
+
+.t9 .cv-header{
+ background:#f3f4f6;
+ padding:25px;
+ border:0;
+}
+
+.t9 .section h3{
+ color:#374151;
+}
+
+.t10 .cv-header{
+ border-left:8px solid #db2777;
+ padding-left:20px;
+}
+
+.t10 .section h3{
+ color:#db2777;
+}
+
+@media(max-width:700px){
+
+ .row{
+  grid-template-columns:1fr;
+ }
+
+ .template-grid{
+  grid-template-columns:repeat(2,1fr);
+ }
+
+ #cv{
+  width:100%;
+  min-height:auto;
+  padding:25px;
+ }
+
+ .cv-name{
+  font-size:25px;
+ }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>📄 Professional CV Maker</h1>
+<p>Create your professional CV easily</p>
+</header>
+
+<div class="container">
+
+<!-- Templates -->
+
+<div class="card">
+
+<h2>1. Choose Template</h2>
+
+<div class="template-grid">
+
+<div class="template active" onclick="changeTemplate(1,this)">Template 1</div>
+<div class="template" onclick="changeTemplate(2,this)">Template 2</div>
+<div class="template" onclick="changeTemplate(3,this)">Template 3</div>
+<div class="template" onclick="changeTemplate(4,this)">Template 4</div>
+<div class="template" onclick="changeTemplate(5,this)">Template 5</div>
+<div class="template" onclick="changeTemplate(6,this)">Template 6</div>
+<div class="template" onclick="changeTemplate(7,this)">Template 7</div>
+<div class="template" onclick="changeTemplate(8,this)">Template 8</div>
+<div class="template" onclick="changeTemplate(9,this)">Template 9</div>
+<div class="template" onclick="changeTemplate(10,this)">Template 10</div>
+
+</div>
+</div>
+
+<!-- Personal -->
+
+<div class="card">
+
+<h2>2. Personal Information</h2>
+
+<div class="row">
+
+<div>
+<label>Full Name</label>
+<input id="name" placeholder="Muhammad Parvez">
+</div>
+
+<div>
+<label>Email</label>
+<input id="email" placeholder="example@gmail.com">
+</div>
+
+</div>
+
+<div class="row">
+
+<div>
+<label>Contact</label>
+<input id="contact" placeholder="+92 300 1234567">
+</div>
+
+<div>
+<label>Address</label>
+<input id="address" placeholder="Faisalabad, Pakistan">
+</div>
+
+</div>
+
+<label>Profile Photo</label>
+
+<input id="photo" type="file" accept="image/*">
+
+<img id="photoPreview" class="photo-preview">
+
+</div>
+
+<!-- Education -->
+
+<div class="card">
+
+<h2>3. Education</h2>
+
+<div id="education">
+
+<div class="education-item">
+
+<label>Degree / Certificate</label>
+<input class="degree" placeholder="FA / Intermediate">
+
+<label>Institute</label>
+<input class="institute" placeholder="College / School">
+
+<label>Year / Percentage</label>
+<input class="year" placeholder="2026 / 57%">
+
+</div>
+
+</div>
+
+<button class="generate" onclick="addEducation()">
++ Add Education
+</button>
+
+</div>
+
+<!-- Experience -->
+
+<div class="card">
+
+<h2>4. Work Experience</h2>
+
+<div id="experience">
+
+<div class="experience-item">
+
+<label>Job Title</label>
+<input class="job" placeholder="Computer Operator">
+
+<label>Company</label>
+<input class="company" placeholder="Company Name">
+
+<label>Duration</label>
+<input class="duration" placeholder="2024 - 2026">
+
+<label>Responsibilities</label>
+<textarea class="responsibility"
+placeholder="Write your responsibilities"></textarea>
+
+</div>
+
+</div>
+
+<button class="generate" onclick="addExperience()">
++ Add Experience
+</button>
+
+</div>
+
+<!-- Skills -->
+
+<div class="card">
+
+<h2>5. Skills</h2>
+
+<textarea id="skills"
+placeholder="MS Office, Computer, Communication, Data Entry"></textarea>
+
+</div>
+
+<!-- Languages -->
+
+<div class="card">
+
+<h2>6. Languages</h2>
+
+<textarea id="languages"
+placeholder="Urdu, English, Punjabi"></textarea>
+
+</div>
+
+<!-- Buttons -->
+
+<div class="card">
+
+<button class="generate" onclick="generateCV()">
+👁️ GENERATE CV
+</button>
+
+<button class="pdf" onclick="downloadPDF()">
+📥 SAVE PDF
+</button>
+
+</div>
+
+<!-- Preview -->
+
+<div class="card">
+
+<h2>CV Preview</h2>
+
+<div id="cv">
+
+<div class="cv-header">
+
+<img id="cvPhoto" class="cv-photo">
+
+<div>
+
+<div id="cvName" class="cv-name">
+Your Name
+</div>
+
+<div class="cv-contact">
+
+<span id="cvEmail">Email</span><br>
+
+<span id="cvContact">Contact</span><br>
+
+<span id="cvAddress">Address</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h3>PROFILE</h3>
+
+<p>
+Professional and motivated candidate seeking an opportunity
+to utilize my education, skills and experience in a professional
+environment.
+</p>
+
+</div>
+
+<div class="section">
+
+<h3>EDUCATION</h3>
+
+<div id="cvEducation">
+<p>No education added.</p>
+</div>
+
+</div>
+
+<div class="section">
+
+<h3>WORK EXPERIENCE</h3>
+
+<div id="cvExperience">
+<p>No experience added.</p>
+</div>
+
+</div>
+
+<div class="section">
+
+<h3>SKILLS</h3>
+
+<div id="cvSkills">
+<p>No skills added.</p>
+</div>
+
+</div>
+
+<div class="section">
+
+<h3>LANGUAGES</h3>
+
+<div id="cvLanguages">
+<p>No languages added.</p>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let currentTemplate = 1;
+
+/* Template */
+
+function changeTemplate(number,element){
+
+ currentTemplate = number;
+
+ document
+ .querySelectorAll(".template")
+ .forEach(function(item){
+
+  item.classList.remove("active");
+
+ });
+
+ element.classList.add("active");
+
+ document.getElementById("cv").className = "t" + number;
+
+}
+
+/* Photo */
+
+document
+.getElementById("photo")
+.addEventListener("change",function(event){
+
+ const file = event.target.files[0];
+
+ if(!file){
+  return;
+ }
+
+ const reader = new FileReader();
+
+ reader.onload = function(e){
+
+  const image = e.target.result;
+
+  document.getElementById("photoPreview").src = image;
+
+  document.getElementById("photoPreview").style.display = "block";
+
+  document.getElementById("cvPhoto").src = image;
+
+  document.getElementById("cvPhoto").style.display = "block";
+
+ };
+
+ reader.readAsDataURL(file);
+
+});
+
+/* Add Education */
+
+function addEducation(){
+
+ const box = document.createElement("div");
+
+ box.className = "education-item";
+
+ box.innerHTML = `
+
+ <hr>
+
+ <label>Degree / Certificate</label>
+
+ <input class="degree"
+ placeholder="Degree / Certificate">
+
+ <label>Institute</label>
+
+ <input class="institute"
+ placeholder="Institute">
+
+ <label>Year / Percentage</label>
+
+ <input class="year"
+ placeholder="Year / Percentage">
+
+ <button class="remove"
+ onclick="this.parentElement.remove()">
+
+ Remove
+
+ </button>
+
+ `;
+
+ document
+ .getElementById("education")
+ .appendChild(box);
+
+}
+
+/* Add Experience */
+
+function addExperience(){
+
+ const box = document.createElement("div");
+
+ box.className = "experience-item";
+
+ box.innerHTML = `
+
+ <hr>
+
+ <label>Job Title</label>
+
+ <input class="job"
+ placeholder="Job Title">
+
+ <label>Company</label>
+
+ <input class="company"
+ placeholder="Company">
+
+ <label>Duration</label>
+
+ <input class="duration"
+ placeholder="Duration">
+
+ <label>Responsibilities</label>
+
+ <textarea class="responsibility"
+ placeholder="Responsibilities"></textarea>
+
+ <button class="remove"
+ onclick="this.parentElement.remove()">
+
+ Remove
+
+ </button>
+
+ `;
+
+ document
+ .getElementById("experience")
+ .appendChild(box);
+
+}
+
+/* Generate */
+
+function generateCV(){
+
+ try{
+
+  const name =
+  document.getElementById("name").value.trim();
+
+  const email =
+  document.getElementById("email").value.trim();
+
+  const contact =
+  document.getElementById("contact").value.trim();
+
+  const address =
+  document.getElementById("address").value.trim();
+
+  document.getElementById("cvName").textContent =
+  name || "Your Name";
+
+  document.getElementById("cvEmail").textContent =
+  email || "Email";
+
+  document.getElementById("cvContact").textContent =
+  contact || "Contact";
+
+  document.getElementById("cvAddress").textContent =
+  address || "Address";
+
+
+  /* Education */
+
+  let education = "";
+
+  document
+  .querySelectorAll(".education-item")
+  .forEach(function(item){
+
+   const degree =
+   item.querySelector(".degree").value.trim();
+
+   const institute =
+   item.querySelector(".institute").value.trim();
+
+   const year =
+   item.querySelector(".year").value.trim();
+
+   if(degree || institute || year){
+
+    education += `
+
+    <div class="cv-item">
+
+    <div class="title">
+    ${escapeHTML(degree)}
+    </div>
+
+    <div>
+    ${escapeHTML(institute)}
+    </div>
+
+    <div class="small">
+    ${escapeHTML(year)}
+    </div>
+
+    </div>
+
+    `;
+
+   }
+
+  });
+
+  document.getElementById("cvEducation").innerHTML =
+  education || "<p>No education added.</p>";
+
+
+  /* Experience */
+
+  let experience = "";
+
+  document
+  .querySelectorAll(".experience-item")
+  .forEach(function(item){
+
+   const job =
+   item.querySelector(".job").value.trim();
+
+   const company =
+   item.querySelector(".company").value.trim();
+
+   const duration =
+   item.querySelector(".duration").value.trim();
+
+   const responsibility =
+   item.querySelector(".responsibility").value.trim();
+
+   if(job || company || duration || responsibility){
+
+    experience += `
+
+    <div class="cv-item">
+
+    <div class="title">
+    ${escapeHTML(job)}
+    </div>
+
+    <div>
+    ${escapeHTML(company)}
+    </div>
+
+    <div class="small">
+    ${escapeHTML(duration)}
+    </div>
+
+    <p>
+    ${escapeHTML(responsibility)}
+    </p>
+
+    </div>
+
+    `;
+
+   }
+
+  });
+
+  document.getElementById("cvExperience").innerHTML =
+  experience || "<p>No experience added.</p>";
+
+
+  /* Skills */
+
+  const skills =
+  document.getElementById("skills").value.trim();
+
+  if(skills){
+
+   document.getElementById("cvSkills").innerHTML =
+   skills
+   .split(",")
+   .map(function(skill){
+
+    return `<span class="skill">
+    ${escapeHTML(skill.trim())}
+    </span>`;
+
+   })
+   .join("");
+
+  }else{
+
+   document.getElementById("cvSkills").innerHTML =
+   "<p>No skills added.</p>";
+
+  }
+
+
+  /* Languages */
+
+  const languages =
+  document.getElementById("languages").value.trim();
+
+  if(languages){
+
+   document.getElementById("cvLanguages").innerHTML =
+   languages
+   .split(",")
+   .map(function(language){
+
+    return `<span class="skill">
+    ${escapeHTML(language.trim())}
+    </span>`;
+
+   })
+   .join("");
+
+  }else{
+
+   document.getElementById("cvLanguages").innerHTML =
+   "<p>No languages added.</p>";
+
+  }
+
+  alert("✅ CV Generated Successfully!");
+
+ }
+
+ catch(error){
+
+  alert("❌ Error: " + error.message);
+
+ }
+
+}
+
+/* Security helper */
+
+function escapeHTML(text){
+
+ return text
+ .replace(/&/g,"&amp;")
+ .replace(/</g,"&lt;")
+ .replace(/>/g,"&gt;")
+ .replace(/"/g,"&quot;")
+ .replace(/'/g,"&#039;");
+
+}
+
+/* PDF */
+
+function downloadPDF(){
+
+ generateCV();
+
+ setTimeout(function(){
+
+  const element =
+  document.getElementById("cv");
+
+  const name =
+  document.getElementById("name").value.trim()
+  || "My-CV";
+
+  const options = {
+
+   margin:0,
+
+   filename:
+   name.replace(/\s+/g,"-") + ".pdf",
+
+   image:{
+    type:"jpeg",
+    quality:0.98
+   },
+
+   html2canvas:{
+    scale:2,
+    useCORS:true,
+    logging:false
+   },
+
+   jsPDF:{
+    unit:"mm",
+    format:"a4",
+    orientation:"portrait"
+   }
+
+  };
+
+  if(typeof html2pdf === "undefined"){
+
+   alert(
+   "PDF library load نہیں ہوئی۔ Internet ON کرکے دوبارہ کوشش کریں۔"
+   );
+
+   return;
+
+  }
+
+  html2pdf()
+  .set(options)
+  .from(element)
+  .save();
+
+ },500);
+
+}
+
+</script>
+
+</body>
+</html>
