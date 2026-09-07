@@ -2,51 +2,48 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Professional CV Maker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- PDF Library -->
+<title>CV PRO AI</title>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
-*{box-sizing:border-box}
+*{
+    box-sizing:border-box;
+}
 
 body{
     margin:0;
-    font-family:Arial,Helvetica,sans-serif;
     background:#eef2f7;
+    font-family:Arial,"Noto Sans",sans-serif;
     color:#222;
 }
 
-header{
-    background:#172554;
-    color:#fff;
-    text-align:center;
-    padding:20px 15px;
-}
-
-header h1{
-    margin:0 0 5px;
-}
-
-.container{
-    max-width:1100px;
+.app{
+    max-width:1200px;
     margin:auto;
     padding:15px;
 }
 
-.card{
-    background:#fff;
+.title{
+    text-align:center;
+    color:#17365d;
+    margin:10px 0 20px;
+}
+
+.panel{
+    background:white;
     padding:20px;
-    margin-bottom:15px;
-    border-radius:12px;
-    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    margin-bottom:20px;
 }
 
 h2{
-    color:#172554;
-    margin-top:0;
+    color:#17365d;
+    margin-top:20px;
 }
 
 label{
@@ -55,396 +52,362 @@ label{
     margin-top:12px;
 }
 
-input,textarea{
+input,
+textarea,
+select{
     width:100%;
     padding:12px;
     margin-top:6px;
-    border:1px solid #ccc;
-    border-radius:7px;
-    font-size:15px;
+    border:1px solid #ccd3dd;
+    border-radius:8px;
+    font-size:16px;
+    font-family:inherit;
 }
 
 textarea{
-    min-height:85px;
+    min-height:90px;
     resize:vertical;
+}
+
+.buttons{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    margin-top:20px;
 }
 
 button{
     border:0;
-    padding:12px 18px;
-    margin:5px;
-    border-radius:8px;
+    padding:13px 18px;
+    border-radius:9px;
     cursor:pointer;
+    font-size:15px;
     font-weight:bold;
+}
+
+button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
 }
 
 .generate{
-    background:#2563eb;
-    color:#fff;
+    background:#17365d;
+    color:white;
 }
 
 .pdf{
-    background:#16a34a;
-    color:#fff;
+    background:#198754;
+    color:white;
 }
 
-.remove{
-    background:#dc2626;
-    color:#fff;
+.clear{
+    background:#dc3545;
+    color:white;
 }
 
-.template-grid{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:10px;
+.print{
+    background:#6f42c1;
+    color:white;
 }
 
-.template{
-    border:2px solid #ddd;
-    padding:14px 5px;
-    border-radius:8px;
-    text-align:center;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-.template.active{
-    border-color:#2563eb;
-    background:#eff6ff;
-}
-
-.row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
-}
-
-.photo-preview{
-    width:110px;
-    height:110px;
-    object-fit:cover;
-    border-radius:50%;
-    margin-top:10px;
-    display:none;
-}
-
-/* =========================
-   CV BASE
-========================= */
+/* CV */
 
 #cv{
-    width:794px;
-    min-height:1123px;
-    background:#fff;
-    margin:auto;
-    padding:45px;
-    color:#222;
+    width:210mm;
+    min-height:297mm;
+    background:white;
+    margin:20px auto;
+    padding:18mm;
+    box-shadow:0 5px 25px rgba(0,0,0,.15);
+    overflow:hidden;
 }
 
 .cv-header{
     display:flex;
-    align-items:center;
-    gap:25px;
-    padding-bottom:22px;
-    border-bottom:3px solid #172554;
+    align-items:flex-start;
+    gap:22px;
+    padding-bottom:20px;
+    border-bottom:3px solid #17365d;
 }
 
-.cv-photo{
-    width:120px;
-    height:120px;
+.photo{
+    width:110px;
+    height:110px;
     object-fit:cover;
-    border-radius:50%;
-    display:none;
+    border-radius:10px;
+    border:2px solid #ddd;
+    flex-shrink:0;
 }
 
-.cv-name{
-    font-size:32px;
-    font-weight:bold;
+.info{
+    flex:1;
+    min-width:0;
 }
 
-.cv-contact{
-    margin-top:8px;
-    line-height:1.8;
-    color:#555;
+.name{
+    margin:0;
+    color:#17365d;
+    font-size:34px;
+    line-height:1.15;
+
+    /* IMPORTANT */
+    white-space:normal !important;
+    overflow:visible !important;
+    text-overflow:clip !important;
+    overflow-wrap:anywhere !important;
+    word-break:break-word !important;
+}
+
+.contact{
+    margin-top:10px;
+    line-height:1.7;
+    overflow-wrap:anywhere;
+    word-break:break-word;
 }
 
 .section{
-    margin-top:25px;
+    margin-top:22px;
 }
 
-.section h3{
-    color:#172554;
-    border-bottom:2px solid #172554;
-    padding-bottom:6px;
-    margin-bottom:12px;
-}
-
-.cv-item{
-    margin-bottom:16px;
-}
-
-.title{
+.section-title{
+    color:#17365d;
+    font-size:19px;
     font-weight:bold;
-    font-size:17px;
+    border-bottom:2px solid #17365d;
+    padding-bottom:5px;
+    margin-bottom:10px;
 }
 
-.small{
-    color:#666;
-    margin-top:3px;
+.content{
+    white-space:pre-line;
+    line-height:1.7;
+    overflow-wrap:anywhere;
+    word-break:break-word;
 }
 
-.skill{
-    display:inline-block;
-    padding:7px 11px;
-    margin:4px;
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.tag{
+    background:#edf2f7;
+    padding:6px 10px;
     border-radius:20px;
-    background:#eee;
+    font-size:13px;
+    overflow-wrap:anywhere;
 }
 
-/* =========================
-   TEMPLATE 1 CLASSIC
-========================= */
+/* Templates */
 
 .t1 .cv-header{
-    border-bottom:3px solid #172554;
+    border-bottom-color:#17365d;
 }
-
-.t1 .section h3{
-    color:#172554;
-}
-
-/* =========================
-   TEMPLATE 2 MODERN BLUE
-========================= */
 
 .t2{
-    padding:0!important;
+    border-top:12px solid #111 !important;
 }
 
 .t2 .cv-header{
-    background:#172554;
-    color:white;
-    padding:45px;
-    border:0;
+    background:#f1f1f1;
+    padding:18px;
+    border-bottom:0;
 }
 
-.t2 .cv-contact{
-    color:#e5e7eb;
+.t2 .name,
+.t2 .section-title{
+    color:#111;
 }
 
-.t2 .section{
-    margin-left:45px;
-    margin-right:45px;
+.t2 .section-title{
+    border-color:#111;
 }
-
-.t2 .section h3{
-    color:#172554;
-}
-
-/* =========================
-   TEMPLATE 3 ELEGANT
-========================= */
 
 .t3{
-    border-top:12px solid #7c3aed;
+    font-family:Georgia,serif;
 }
 
 .t3 .cv-header{
     display:block;
     text-align:center;
-    border:0;
 }
 
-.t3 .cv-photo{
-    margin:0 auto 15px;
+.t3 .photo{
+    margin-bottom:12px;
 }
 
-.t3 .cv-name{
-    color:#7c3aed;
-}
-
-.t3 .section h3{
-    color:#7c3aed;
+.t3 .name{
     text-align:center;
+    color:#806000;
 }
 
-/* =========================
-   TEMPLATE 4 GREEN
-========================= */
+.t3 .section-title{
+    color:#806000;
+    border-color:#b89a42;
+}
 
 .t4 .cv-header{
-    border-left:10px solid #16a34a;
-    padding-left:20px;
+    border-left:8px solid #198754;
+    padding-left:15px;
 }
 
-.t4 .section h3{
-    color:#16a34a;
-    border-bottom-color:#16a34a;
+.t4 .name,
+.t4 .section-title{
+    color:#198754;
 }
 
-/* =========================
-   TEMPLATE 5 RED
-========================= */
+.t4 .section-title{
+    border-color:#198754;
+}
 
 .t5 .cv-header{
-    border-bottom:5px solid #dc2626;
+    background:#fff3f3;
+    padding:18px;
+    border-left:8px solid #dc3545;
 }
 
-.t5 .cv-name{
-    color:#dc2626;
+.t5 .name,
+.t5 .section-title{
+    color:#b02a37;
 }
 
-.t5 .section h3{
-    color:#dc2626;
-    border-bottom-color:#dc2626;
-}
-
-/* =========================
-   TEMPLATE 6 TWO COLUMN
-========================= */
-
-.t6{
-    padding:0!important;
-    display:grid;
-    grid-template-columns:250px 1fr;
+.t5 .section-title{
+    border-color:#dc3545;
 }
 
 .t6 .cv-header{
-    grid-column:1 / 3;
-    background:#0891b2;
+    background:#17365d;
+    padding:20px;
     color:white;
-    padding:35px;
     border:0;
 }
 
-.t6 .cv-contact{
+.t6 .name{
     color:white;
 }
 
-.t6 .section{
-    padding:0 25px;
+.t6 .section-title{
+    color:#17365d;
 }
-
-.t6 .section h3{
-    color:#0891b2;
-    border-bottom-color:#0891b2;
-}
-
-/* =========================
-   TEMPLATE 7 DARK
-========================= */
 
 .t7{
-    background:#f8fafc;
+    background:#202124 !important;
+    color:#eee;
 }
 
 .t7 .cv-header{
-    background:#111827;
-    color:white;
-    padding:35px;
+    background:#111;
+    padding:20px;
     border:0;
 }
 
-.t7 .cv-contact{
-    color:#d1d5db;
+.t7 .name{
+    color:white;
 }
 
-.t7 .section h3{
-    color:#111827;
+.t7 .section-title{
+    color:white;
+    border-color:#777;
 }
 
-/* =========================
-   TEMPLATE 8 ORANGE
-========================= */
+.t7 .tag{
+    background:#444;
+    color:white;
+}
 
 .t8 .cv-header{
-    border-top:12px solid #f59e0b;
+    border-bottom:6px solid #f57c00;
 }
 
-.t8 .cv-name{
-    color:#d97706;
+.t8 .name,
+.t8 .section-title{
+    color:#e65100;
 }
 
-.t8 .section h3{
-    color:#d97706;
-    border-bottom-color:#f59e0b;
+.t8 .section-title{
+    border-color:#f57c00;
 }
-
-/* =========================
-   TEMPLATE 9 MINIMAL
-========================= */
 
 .t9{
-    padding:70px;
+    padding:25mm !important;
 }
 
 .t9 .cv-header{
-    border:0;
-    background:#f3f4f6;
-    padding:25px;
-}
-
-.t9 .cv-name{
-    font-size:30px;
-}
-
-.t9 .section h3{
-    color:#374151;
     border-bottom:1px solid #aaa;
 }
 
-/* =========================
-   TEMPLATE 10 PINK
-========================= */
+.t9 .name{
+    color:#222;
+    font-weight:normal;
+}
+
+.t9 .section-title{
+    color:#333;
+    border-color:#ccc;
+    font-weight:normal;
+}
 
 .t10 .cv-header{
-    border-left:10px solid #db2777;
-    padding-left:20px;
+    background:#fff0f6;
+    padding:20px;
+    border-radius:10px;
 }
 
-.t10 .cv-name{
-    color:#db2777;
+.t10 .name,
+.t10 .section-title{
+    color:#c2185b;
 }
 
-.t10 .section h3{
-    color:#db2777;
-    border-bottom-color:#db2777;
+.t10 .section-title{
+    border-color:#e91e63;
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* Mobile */
 
 @media(max-width:700px){
-
-    .row{
-        grid-template-columns:1fr;
-    }
-
-    .template-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
 
     #cv{
         width:100%;
         min-height:auto;
-        padding:25px;
+        padding:20px;
     }
 
-    .cv-name{
-        font-size:25px;
+    .cv-header{
+        flex-direction:column;
     }
 
-    .t6{
-        display:block;
+    .info{
+        width:100%;
     }
 
-    .t6 .cv-header{
-        display:flex;
+    .name{
+        font-size:27px;
     }
 
-    .t6 .section{
-        padding:0;
+    .buttons button{
+        width:100%;
+    }
+}
+
+/* Print */
+
+@media print{
+
+    body{
+        background:white;
+    }
+
+    .panel,
+    .title{
+        display:none;
+    }
+
+    #cv{
+        margin:0;
+        width:210mm;
+        box-shadow:none;
     }
 }
 </style>
@@ -452,778 +415,572 @@ button{
 
 <body>
 
-<header>
-    <h1>📄 Professional CV Maker</h1>
-    <div>Create Your Professional CV</div>
-</header>
+<div class="app">
 
-<div class="container">
+<h1 class="title">📄 CV PRO AI</h1>
 
-<!-- =========================
-     TEMPLATES
-========================= -->
+<div class="panel">
 
-<div class="card">
+<h2>👤 Personal Information</h2>
 
-<h2>1. Choose CV Template</h2>
-
-<div class="template-grid">
-
-<div class="template active" onclick="changeTemplate(1,this)">
-Classic
-</div>
-
-<div class="template" onclick="changeTemplate(2,this)">
-Modern
-</div>
-
-<div class="template" onclick="changeTemplate(3,this)">
-Elegant
-</div>
-
-<div class="template" onclick="changeTemplate(4,this)">
-Green
-</div>
-
-<div class="template" onclick="changeTemplate(5,this)">
-Red
-</div>
-
-<div class="template" onclick="changeTemplate(6,this)">
-Two Column
-</div>
-
-<div class="template" onclick="changeTemplate(7,this)">
-Dark
-</div>
-
-<div class="template" onclick="changeTemplate(8,this)">
-Orange
-</div>
-
-<div class="template" onclick="changeTemplate(9,this)">
-Minimal
-</div>
-
-<div class="template" onclick="changeTemplate(10,this)">
-Pink
-</div>
-
-</div>
-</div>
-
-<!-- =========================
-     PERSONAL INFORMATION
-========================= -->
-
-<div class="card">
-
-<h2>2. Personal Information</h2>
-
-<div class="row">
-
-<div>
 <label>Full Name</label>
-<input id="name" placeholder="Muhammad Parvez">
-</div>
+<input
+    id="name"
+    type="text"
+    placeholder="محمد رضوان / Muhammad Rizwan"
+>
 
-<div>
 <label>Email</label>
-<input id="email" placeholder="example@gmail.com">
-</div>
+<input
+    id="email"
+    type="email"
+    placeholder="example@email.com"
+>
 
-</div>
-
-<div class="row">
-
-<div>
 <label>Contact</label>
-<input id="contact" placeholder="+92 300 1234567">
-</div>
+<input
+    id="phone"
+    type="text"
+    placeholder="+92 300 1234567"
+>
 
-<div>
 <label>Address</label>
-<input id="address" placeholder="Faisalabad, Pakistan">
-</div>
-
-</div>
+<textarea
+    id="address"
+    placeholder="Your address"
+></textarea>
 
 <label>Profile Photo</label>
+<input
+    id="photo"
+    type="file"
+    accept="image/*"
+>
 
-<input id="photo" type="file" accept="image/*">
+<h2>🎨 CV Template</h2>
 
-<img id="photoPreview" class="photo-preview">
+<select id="template">
+    <option value="t1">Template 1 - Classic</option>
+    <option value="t2">Template 2 - Modern</option>
+    <option value="t3">Template 3 - Elegant</option>
+    <option value="t4">Template 4 - Green</option>
+    <option value="t5">Template 5 - Red</option>
+    <option value="t6">Template 6 - Professional</option>
+    <option value="t7">Template 7 - Dark</option>
+    <option value="t8">Template 8 - Orange</option>
+    <option value="t9">Template 9 - Minimal</option>
+    <option value="t10">Template 10 - Pink</option>
+</select>
 
-</div>
+<h2>🎓 Education</h2>
 
-<!-- =========================
-     EDUCATION
-========================= -->
+<textarea
+    id="education"
+    placeholder="FA / Intermediate&#10;Government Higher Secondary School&#10;Computer Diploma"
+></textarea>
 
-<div class="card">
+<h2>💼 Work Experience</h2>
 
-<h2>3. Education</h2>
+<textarea
+    id="experience"
+    placeholder="Company Name&#10;Job Title&#10;Responsibilities"
+></textarea>
 
-<div id="education">
+<h2>⭐ Skills</h2>
 
-<div class="education-item">
+<textarea
+    id="skills"
+    placeholder="Computer Skills, MS Office, Data Entry, Communication"
+></textarea>
 
-<label>Degree / Certificate</label>
-<input class="degree" placeholder="FA / Intermediate">
+<h2>🌐 Languages</h2>
 
-<label>Institute</label>
-<input class="institute" placeholder="College / School">
+<textarea
+    id="languages"
+    placeholder="Urdu, English, Punjabi"
+></textarea>
 
-<label>Year / Percentage</label>
-<input class="year" placeholder="2026 / 57%">
+<div class="buttons">
 
-</div>
+<button
+    id="generateBtn"
+    class="generate"
+    type="button"
+>
+👁️ Generate CV
+</button>
 
-</div>
+<button
+    id="pdfBtn"
+    class="pdf"
+    type="button"
+>
+📄 Save CV as PDF
+</button>
 
-<button class="generate" onclick="addEducation()">
-+ Add Education
+<button
+    id="printBtn"
+    class="print"
+    type="button"
+>
+🖨️ Print
+</button>
+
+<button
+    id="clearBtn"
+    class="clear"
+    type="button"
+>
+🗑️ Clear
 </button>
 
 </div>
 
-<!-- =========================
-     EXPERIENCE
-========================= -->
-
-<div class="card">
-
-<h2>4. Work Experience</h2>
-
-<div id="experience">
-
-<div class="experience-item">
-
-<label>Job Title</label>
-<input class="job" placeholder="Computer Operator">
-
-<label>Company</label>
-<input class="company" placeholder="Company Name">
-
-<label>Duration</label>
-<input class="duration" placeholder="2024 - 2026">
-
-<label>Responsibilities</label>
-<textarea class="responsibility"
-placeholder="Write your responsibilities"></textarea>
-
 </div>
 
-</div>
 
-<button class="generate" onclick="addExperience()">
-+ Add Experience
-</button>
-
-</div>
-
-<!-- =========================
-     SKILLS
-========================= -->
-
-<div class="card">
-
-<h2>5. Skills</h2>
-
-<textarea id="skills"
-placeholder="MS Office, Computer, Communication, Data Entry"></textarea>
-
-</div>
-
-<!-- =========================
-     LANGUAGES
-========================= -->
-
-<div class="card">
-
-<h2>6. Languages</h2>
-
-<textarea id="languages"
-placeholder="Urdu, English, Punjabi"></textarea>
-
-</div>
-
-<!-- =========================
-     BUTTONS
-========================= -->
-
-<div class="card">
-
-<button class="generate" onclick="generateCV()">
-👁️ GENERATE CV
-</button>
-
-<button class="pdf" onclick="savePDF()">
-📥 SAVE TO PDF
-</button>
-
-</div>
-
-<!-- =========================
-     PREVIEW
-========================= -->
-
-<div class="card">
-
-<h2>CV Preview</h2>
+<!-- CV -->
 
 <div id="cv" class="t1">
 
-<!-- HEADER -->
+    <div class="cv-header">
 
-<div class="cv-header">
+        <img
+            id="pPhoto"
+            class="photo"
+            style="display:none"
+            alt="Profile Photo"
+        >
 
-<img id="cvPhoto" class="cv-photo">
+        <div class="info">
 
-<div>
+            <h1
+                id="pName"
+                class="name"
+                dir="auto"
+            >
+                Your Name
+            </h1>
 
-<div id="cvName" class="cv-name">
-Your Name
+            <div
+                id="pContact"
+                class="contact"
+                dir="auto"
+            >
+                Email | Contact | Address
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="section">
+
+        <div class="section-title">
+            EDUCATION
+        </div>
+
+        <div
+            id="pEducation"
+            class="content"
+            dir="auto"
+        >
+            Your education details
+        </div>
+
+    </div>
+
+
+    <div class="section">
+
+        <div class="section-title">
+            WORK EXPERIENCE
+        </div>
+
+        <div
+            id="pExperience"
+            class="content"
+            dir="auto"
+        >
+            Your work experience
+        </div>
+
+    </div>
+
+
+    <div class="section">
+
+        <div class="section-title">
+            SKILLS
+        </div>
+
+        <div
+            id="pSkills"
+            class="tags"
+        ></div>
+
+    </div>
+
+
+    <div class="section">
+
+        <div class="section-title">
+            LANGUAGES
+        </div>
+
+        <div
+            id="pLanguages"
+            class="tags"
+        ></div>
+
+    </div>
+
 </div>
 
-<div class="cv-contact">
-
-<span id="cvEmail">Email</span><br>
-
-<span id="cvContact">Contact</span><br>
-
-<span id="cvAddress">Address</span>
-
 </div>
 
-</div>
-
-</div>
-
-<!-- PROFILE -->
-
-<div class="section">
-
-<h3>PROFILE</h3>
-
-<p id="cvProfile">
-Professional and motivated candidate seeking an opportunity
-to utilize my education, skills and experience in a professional
-environment.
-</p>
-
-</div>
-
-<!-- EDUCATION -->
-
-<div class="section">
-
-<h3>EDUCATION</h3>
-
-<div id="cvEducation">
-<p>No education added.</p>
-</div>
-
-</div>
-
-<!-- EXPERIENCE -->
-
-<div class="section">
-
-<h3>WORK EXPERIENCE</h3>
-
-<div id="cvExperience">
-<p>No experience added.</p>
-</div>
-
-</div>
-
-<!-- SKILLS -->
-
-<div class="section">
-
-<h3>SKILLS</h3>
-
-<div id="cvSkills">
-<p>No skills added.</p>
-</div>
-
-</div>
-
-<!-- LANGUAGES -->
-
-<div class="section">
-
-<h3>LANGUAGES</h3>
-
-<div id="cvLanguages">
-<p>No languages added.</p>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
 
 <script>
 
-/* =================================
-   CURRENT TEMPLATE
-================================= */
+/* =====================================
+   GET ELEMENTS
+===================================== */
 
-let currentTemplate = 1;
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const phoneInput = document.getElementById("phone");
+const addressInput = document.getElementById("address");
+const educationInput = document.getElementById("education");
+const experienceInput = document.getElementById("experience");
+const skillsInput = document.getElementById("skills");
+const languagesInput = document.getElementById("languages");
 
+const templateInput =
+    document.getElementById("template");
 
-/* =================================
-   CHANGE TEMPLATE
-================================= */
+const photoInput =
+    document.getElementById("photo");
 
-function changeTemplate(number,element){
+const cv =
+    document.getElementById("cv");
 
-    currentTemplate = number;
+const pName =
+    document.getElementById("pName");
 
-    document
-    .querySelectorAll(".template")
-    .forEach(function(item){
-        item.classList.remove("active");
-    });
+const pContact =
+    document.getElementById("pContact");
 
-    element.classList.add("active");
+const pEducation =
+    document.getElementById("pEducation");
 
-    document.getElementById("cv").className =
-        "t" + number;
+const pExperience =
+    document.getElementById("pExperience");
 
-}
+const pSkills =
+    document.getElementById("pSkills");
 
+const pLanguages =
+    document.getElementById("pLanguages");
 
-/* =================================
-   PHOTO
-================================= */
+const pPhoto =
+    document.getElementById("pPhoto");
 
-document
-.getElementById("photo")
-.addEventListener("change",function(event){
 
-    const file = event.target.files[0];
-
-    if(!file) return;
-
-    const reader = new FileReader();
-
-    reader.onload = function(e){
-
-        const image = e.target.result;
-
-        document.getElementById("photoPreview").src =
-            image;
-
-        document.getElementById("photoPreview").style.display =
-            "block";
-
-        document.getElementById("cvPhoto").src =
-            image;
-
-        document.getElementById("cvPhoto").style.display =
-            "block";
-
-    };
-
-    reader.readAsDataURL(file);
-
-});
-
-
-/* =================================
-   ADD EDUCATION
-================================= */
-
-function addEducation(){
-
-    const box =
-        document.createElement("div");
-
-    box.className =
-        "education-item";
-
-    box.innerHTML = `
-
-        <hr>
-
-        <label>Degree / Certificate</label>
-
-        <input class="degree"
-        placeholder="Degree / Certificate">
-
-        <label>Institute</label>
-
-        <input class="institute"
-        placeholder="Institute">
-
-        <label>Year / Percentage</label>
-
-        <input class="year"
-        placeholder="Year / Percentage">
-
-        <button class="remove"
-        onclick="this.parentElement.remove()">
-
-        Remove
-
-        </button>
-
-    `;
-
-    document
-    .getElementById("education")
-    .appendChild(box);
-
-}
-
-
-/* =================================
-   ADD EXPERIENCE
-================================= */
-
-function addExperience(){
-
-    const box =
-        document.createElement("div");
-
-    box.className =
-        "experience-item";
-
-    box.innerHTML = `
-
-        <hr>
-
-        <label>Job Title</label>
-
-        <input class="job"
-        placeholder="Job Title">
-
-        <label>Company</label>
-
-        <input class="company"
-        placeholder="Company">
-
-        <label>Duration</label>
-
-        <input class="duration"
-        placeholder="Duration">
-
-        <label>Responsibilities</label>
-
-        <textarea class="responsibility"
-        placeholder="Responsibilities"></textarea>
-
-        <button class="remove"
-        onclick="this.parentElement.remove()">
-
-        Remove
-
-        </button>
-
-    `;
-
-    document
-    .getElementById("experience")
-    .appendChild(box);
-
-}
-
-
-/* =================================
-   ESCAPE HTML
-================================= */
-
-function escapeHTML(text){
-
-    return text
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-/* =================================
+/* =====================================
    GENERATE CV
-================================= */
+===================================== */
 
 function generateCV(){
 
-    /* PERSONAL */
-
     const name =
-        document.getElementById("name").value.trim();
+        nameInput.value.trim();
 
     const email =
-        document.getElementById("email").value.trim();
+        emailInput.value.trim();
 
-    const contact =
-        document.getElementById("contact").value.trim();
+    const phone =
+        phoneInput.value.trim();
 
     const address =
-        document.getElementById("address").value.trim();
+        addressInput.value.trim();
 
+    const education =
+        educationInput.value.trim();
 
-    document.getElementById("cvName").textContent =
-        name || "Your Name";
-
-    document.getElementById("cvEmail").textContent =
-        email || "Email";
-
-    document.getElementById("cvContact").textContent =
-        contact || "Contact";
-
-    document.getElementById("cvAddress").textContent =
-        address || "Address";
-
-
-    /* EDUCATION */
-
-    let educationHTML = "";
-
-    document
-    .querySelectorAll(".education-item")
-    .forEach(function(item){
-
-        const degree =
-            item.querySelector(".degree").value.trim();
-
-        const institute =
-            item.querySelector(".institute").value.trim();
-
-        const year =
-            item.querySelector(".year").value.trim();
-
-        if(degree || institute || year){
-
-            educationHTML += `
-
-            <div class="cv-item">
-
-                <div class="title">
-                    ${escapeHTML(degree)}
-                </div>
-
-                <div>
-                    ${escapeHTML(institute)}
-                </div>
-
-                <div class="small">
-                    ${escapeHTML(year)}
-                </div>
-
-            </div>
-
-            `;
-
-        }
-
-    });
-
-    document.getElementById("cvEducation").innerHTML =
-        educationHTML ||
-        "<p>No education added.</p>";
-
-
-    /* EXPERIENCE */
-
-    let experienceHTML = "";
-
-    document
-    .querySelectorAll(".experience-item")
-    .forEach(function(item){
-
-        const job =
-            item.querySelector(".job").value.trim();
-
-        const company =
-            item.querySelector(".company").value.trim();
-
-        const duration =
-            item.querySelector(".duration").value.trim();
-
-        const responsibility =
-            item.querySelector(".responsibility").value.trim();
-
-        if(job || company || duration || responsibility){
-
-            experienceHTML += `
-
-            <div class="cv-item">
-
-                <div class="title">
-                    ${escapeHTML(job)}
-                </div>
-
-                <div>
-                    ${escapeHTML(company)}
-                </div>
-
-                <div class="small">
-                    ${escapeHTML(duration)}
-                </div>
-
-                <p>
-                    ${escapeHTML(responsibility)}
-                </p>
-
-            </div>
-
-            `;
-
-        }
-
-    });
-
-    document.getElementById("cvExperience").innerHTML =
-        experienceHTML ||
-        "<p>No experience added.</p>";
-
-
-    /* SKILLS */
+    const experience =
+        experienceInput.value.trim();
 
     const skills =
-        document.getElementById("skills").value.trim();
+        skillsInput.value.trim();
+
+    const languages =
+        languagesInput.value.trim();
+
+
+    /* Name */
+
+    pName.textContent =
+        name || "Your Name";
+
+    pName.dir = "auto";
+
+
+    /* Contact */
+
+    const contactParts = [];
+
+    if(email)
+        contactParts.push(email);
+
+    if(phone)
+        contactParts.push(phone);
+
+    if(address)
+        contactParts.push(address);
+
+    pContact.textContent =
+        contactParts.length
+        ? contactParts.join(" | ")
+        : "Email | Contact | Address";
+
+    pContact.dir = "auto";
+
+
+    /* Education */
+
+    pEducation.textContent =
+        education || "Your education details";
+
+
+    /* Experience */
+
+    pExperience.textContent =
+        experience || "Your work experience";
+
+
+    /* Skills */
+
+    pSkills.innerHTML = "";
 
     if(skills){
 
-        document.getElementById("cvSkills").innerHTML =
-            skills
-            .split(",")
-            .filter(x => x.trim())
-            .map(function(skill){
+        skills
+        .split(/[,،\n]+/)
+        .forEach(function(item){
 
-                return `
-                <span class="skill">
-                    ${escapeHTML(skill.trim())}
-                </span>
-                `;
+            const value =
+                item.trim();
 
-            })
-            .join("");
+            if(value){
+
+                const tag =
+                    document.createElement("span");
+
+                tag.className = "tag";
+
+                tag.textContent = value;
+
+                tag.dir = "auto";
+
+                pSkills.appendChild(tag);
+            }
+        });
 
     }else{
 
-        document.getElementById("cvSkills").innerHTML =
-            "<p>No skills added.</p>";
-
+        addTag(pSkills,"Your Skills");
     }
 
 
-    /* LANGUAGES */
+    /* Languages */
 
-    const languages =
-        document.getElementById("languages").value.trim();
+    pLanguages.innerHTML = "";
 
     if(languages){
 
-        document.getElementById("cvLanguages").innerHTML =
-            languages
-            .split(",")
-            .filter(x => x.trim())
-            .map(function(language){
+        languages
+        .split(/[,،\n]+/)
+        .forEach(function(item){
 
-                return `
-                <span class="skill">
-                    ${escapeHTML(language.trim())}
-                </span>
-                `;
+            const value =
+                item.trim();
 
-            })
-            .join("");
+            if(value){
+
+                const tag =
+                    document.createElement("span");
+
+                tag.className = "tag";
+
+                tag.textContent = value;
+
+                tag.dir = "auto";
+
+                pLanguages.appendChild(tag);
+            }
+        });
 
     }else{
 
-        document.getElementById("cvLanguages").innerHTML =
-            "<p>No languages added.</p>";
-
+        addTag(pLanguages,"Urdu");
     }
-
 }
 
 
-/* =================================
-   SAVE PDF
-================================= */
+/* =====================================
+   ADD TAG
+===================================== */
+
+function addTag(parent,text){
+
+    const tag =
+        document.createElement("span");
+
+    tag.className = "tag";
+
+    tag.textContent = text;
+
+    parent.appendChild(tag);
+}
+
+
+/* =====================================
+   TEMPLATE
+===================================== */
+
+function changeTemplate(){
+
+    const selected =
+        templateInput.value;
+
+    cv.className =
+        selected;
+
+    generateCV();
+}
+
+
+/* =====================================
+   PHOTO
+===================================== */
+
+function loadPhoto(){
+
+    const file =
+        photoInput.files[0];
+
+    if(!file){
+        return;
+    }
+
+    if(!file.type.startsWith("image/")){
+
+        alert("Please select an image.");
+
+        photoInput.value = "";
+
+        return;
+    }
+
+    const reader =
+        new FileReader();
+
+    reader.onload =
+        function(event){
+
+            pPhoto.src =
+                event.target.result;
+
+            pPhoto.style.display =
+                "block";
+        };
+
+    reader.readAsDataURL(file);
+}
+
+
+/* =====================================
+   PDF
+===================================== */
 
 async function savePDF(){
 
+    generateCV();
+
+    if(typeof html2canvas === "undefined"){
+
+        alert(
+            "PDF library load نہیں ہوئی۔ Internet connection check کریں۔"
+        );
+
+        return;
+    }
+
+    if(!window.jspdf){
+
+        alert(
+            "PDF system load نہیں ہوا۔ Page refresh کریں۔"
+        );
+
+        return;
+    }
+
+
+    const button =
+        document.getElementById("pdfBtn");
+
+    button.disabled = true;
+
+    button.textContent =
+        "⏳ Creating PDF...";
+
+
     try{
 
-        /* First generate latest information */
-
-        generateCV();
-
-
-        /* Check libraries */
-
-        if(typeof html2canvas === "undefined"){
-
-            alert(
-                "PDF system load نہیں ہوا۔ Internet ON کرکے دوبارہ کوشش کریں۔"
-            );
-
-            return;
-        }
-
-
-        if(typeof window.jspdf === "undefined"){
-
-            alert(
-                "PDF system load نہیں ہوا۔ Internet ON کرکے دوبارہ کوشش کریں۔"
-            );
-
-            return;
-        }
-
-
-        const cv =
-            document.getElementById("cv");
-
-
-        /* Wait for browser rendering */
+        /*
+        Wait for browser rendering
+        */
 
         await new Promise(function(resolve){
 
-            setTimeout(resolve,700);
+            setTimeout(resolve,1000);
 
         });
 
 
         const canvas =
-            await html2canvas(cv,{
+            await html2canvas(
 
-                scale:2,
+                cv,
 
-                useCORS:true,
+                {
+                    scale:2,
+                    useCORS:true,
+                    allowTaint:true,
+                    backgroundColor:"#ffffff",
+                    logging:false,
 
-                allowTaint:true,
+                    windowWidth:
+                        cv.scrollWidth,
 
-                backgroundColor:"#ffffff",
+                    windowHeight:
+                        cv.scrollHeight
+                }
 
-                logging:false,
-
-                windowWidth:cv.scrollWidth,
-
-                windowHeight:cv.scrollHeight
-
-            });
-
-
-        const image =
-            canvas.toDataURL("image/jpeg",0.98);
+            );
 
 
-        const { jsPDF } =
-            window.jspdf;
+        const imgData =
+            canvas.toDataURL(
+                "image/jpeg",
+                0.95
+            );
+
+
+        const {
+            jsPDF
+        } = window.jspdf;
 
 
         const pdf =
@@ -1236,7 +993,6 @@ async function savePDF(){
                 format:"a4",
 
                 compress:true
-
             });
 
 
@@ -1247,33 +1003,28 @@ async function savePDF(){
             pdf.internal.pageSize.getHeight();
 
 
-        const imageWidth =
+        const imgWidth =
             pageWidth;
 
-
-        const imageHeight =
+        const imgHeight =
             canvas.height *
-            imageWidth /
+            imgWidth /
             canvas.width;
 
 
-        /* Multi-page PDF */
-
         let heightLeft =
-            imageHeight;
+            imgHeight;
 
         let position = 0;
 
 
         pdf.addImage(
-            image,
+            imgData,
             "JPEG",
             0,
             position,
-            imageWidth,
-            imageHeight,
-            undefined,
-            "FAST"
+            imgWidth,
+            imgHeight
         );
 
 
@@ -1283,41 +1034,40 @@ async function savePDF(){
         while(heightLeft > 0){
 
             position =
-                heightLeft - imageHeight;
+                heightLeft - imgHeight;
 
             pdf.addPage();
 
             pdf.addImage(
-                image,
+                imgData,
                 "JPEG",
                 0,
                 position,
-                imageWidth,
-                imageHeight,
-                undefined,
-                "FAST"
+                imgWidth,
+                imgHeight
             );
 
             heightLeft -= pageHeight;
-
         }
 
 
-        const name =
-            document
-            .getElementById("name")
-            .value
-            .trim();
+        let fileName =
+            nameInput.value.trim();
+
+        if(!fileName){
+            fileName = "Professional_CV";
+        }
 
 
-        const fileName =
-            (name || "My-CV")
-            .replace(/[^\w\- ]/g,"")
-            .replace(/\s+/g,"-")
-            + ".pdf";
+        fileName =
+            fileName
+            .replace(/[\/\\:*?"<>|]/g,"_")
+            .replace(/\s+/g,"_");
 
 
-        pdf.save(fileName);
+        pdf.save(
+            fileName + ".pdf"
+        );
 
 
     }catch(error){
@@ -1325,17 +1075,152 @@ async function savePDF(){
         console.error(error);
 
         alert(
-            "PDF بنانے میں مسئلہ آیا۔ براہِ کرم دوبارہ کوشش کریں۔"
+            "PDF بنانے میں مسئلہ آیا۔ دوبارہ کوشش کریں۔"
         );
 
     }
 
+
+    button.disabled = false;
+
+    button.textContent =
+        "📄 Save CV as PDF";
 }
 
 
-/* =================================
-   INITIAL
-================================= */
+/* =====================================
+   PRINT
+===================================== */
+
+function printCV(){
+
+    generateCV();
+
+    setTimeout(function(){
+
+        window.print();
+
+    },300);
+}
+
+
+/* =====================================
+   CLEAR
+===================================== */
+
+function clearForm(){
+
+    const confirmClear =
+        confirm(
+            "کیا آپ تمام معلومات صاف کرنا چاہتے ہیں؟"
+        );
+
+    if(!confirmClear){
+        return;
+    }
+
+
+    nameInput.value = "";
+    emailInput.value = "";
+    phoneInput.value = "";
+    addressInput.value = "";
+    educationInput.value = "";
+    experienceInput.value = "";
+    skillsInput.value = "";
+    languagesInput.value = "";
+
+    photoInput.value = "";
+
+    templateInput.value = "t1";
+
+    cv.className = "t1";
+
+    pPhoto.src = "";
+
+    pPhoto.style.display =
+        "none";
+
+    generateCV();
+}
+
+
+/* =====================================
+   BUTTON EVENTS
+===================================== */
+
+document
+    .getElementById("generateBtn")
+    .addEventListener(
+        "click",
+        generateCV
+    );
+
+
+document
+    .getElementById("pdfBtn")
+    .addEventListener(
+        "click",
+        savePDF
+    );
+
+
+document
+    .getElementById("printBtn")
+    .addEventListener(
+        "click",
+        printCV
+    );
+
+
+document
+    .getElementById("clearBtn")
+    .addEventListener(
+        "click",
+        clearForm
+    );
+
+
+templateInput
+    .addEventListener(
+        "change",
+        changeTemplate
+    );
+
+
+photoInput
+    .addEventListener(
+        "change",
+        loadPhoto
+    );
+
+
+/* =====================================
+   LIVE PREVIEW
+===================================== */
+
+[
+    nameInput,
+    emailInput,
+    phoneInput,
+    addressInput,
+    educationInput,
+    experienceInput,
+    skillsInput,
+    languagesInput
+]
+.forEach(function(input){
+
+    input.addEventListener(
+        "input",
+        generateCV
+    );
+
+});
+
+
+/* =====================================
+   INITIAL CV
+===================================== */
 
 generateCV();
 
