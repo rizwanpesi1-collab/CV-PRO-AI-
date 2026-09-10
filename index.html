@@ -117,6 +117,25 @@ button:disabled{
     color:white;
 }
 
+/* ACTION COUNTERS */
+
+#actionCounters{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+    margin:15px 0 20px;
+}
+
+.action-counter{
+    background:white;
+    padding:10px 16px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+    color:#17365d;
+    font-weight:bold;
+}
+
 /* CV */
 
 #cv{
@@ -157,7 +176,6 @@ button:disabled{
     font-size:34px;
     line-height:1.15;
 
-    /* IMPORTANT */
     white-space:normal !important;
     overflow:visible !important;
     text-overflow:clip !important;
@@ -395,6 +413,11 @@ button:disabled{
     .buttons button{
         width:100%;
     }
+
+    .action-counter{
+        width:100%;
+        text-align:center;
+    }
 }
 
 /* Print */
@@ -406,7 +429,8 @@ button:disabled{
     }
 
     .panel,
-    .title{
+    .title,
+    #actionCounters{
         display:none;
     }
 
@@ -472,6 +496,30 @@ button:disabled{
 </div>
 
 
+<!-- =====================================
+     GLOBAL CV ACTION COUNTERS
+===================================== -->
+
+<div id="actionCounters">
+
+    <div class="action-counter">
+        📄 CVs Saved:
+        <span id="pdfSaveCount">0</span>
+    </div>
+
+    <div class="action-counter">
+        👁️ CVs Generated:
+        <span id="generateCount">0</span>
+    </div>
+
+    <div class="action-counter">
+        🖨️ CVs Printed:
+        <span id="printCount">0</span>
+    </div>
+
+</div>
+
+
 <div class="panel">
 
 <h2>👤 Personal Information</h2>
@@ -513,6 +561,7 @@ button:disabled{
 <h2>🎨 CV Template</h2>
 
 <select id="template">
+
     <option value="t1">Template 1 - Classic</option>
     <option value="t2">Template 2 - Modern</option>
     <option value="t3">Template 3 - Elegant</option>
@@ -523,6 +572,7 @@ button:disabled{
     <option value="t8">Template 8 - Orange</option>
     <option value="t9">Template 9 - Minimal</option>
     <option value="t10">Template 10 - Pink</option>
+
 </select>
 
 <h2>🎓 Education</h2>
@@ -552,6 +602,7 @@ button:disabled{
     id="languages"
     placeholder="Urdu, English, Punjabi"
 ></textarea>
+
 
 <div class="buttons">
 
@@ -700,14 +751,29 @@ button:disabled{
    GET ELEMENTS
 ===================================== */
 
-const nameInput = document.getElementById("name");
-const emailInput = document.getElementById("email");
-const phoneInput = document.getElementById("phone");
-const addressInput = document.getElementById("address");
-const educationInput = document.getElementById("education");
-const experienceInput = document.getElementById("experience");
-const skillsInput = document.getElementById("skills");
-const languagesInput = document.getElementById("languages");
+const nameInput =
+    document.getElementById("name");
+
+const emailInput =
+    document.getElementById("email");
+
+const phoneInput =
+    document.getElementById("phone");
+
+const addressInput =
+    document.getElementById("address");
+
+const educationInput =
+    document.getElementById("education");
+
+const experienceInput =
+    document.getElementById("experience");
+
+const skillsInput =
+    document.getElementById("skills");
+
+const languagesInput =
+    document.getElementById("languages");
 
 const templateInput =
     document.getElementById("template");
@@ -738,6 +804,172 @@ const pLanguages =
 
 const pPhoto =
     document.getElementById("pPhoto");
+
+
+/* =====================================
+   GLOBAL ACTION COUNTERS
+===================================== */
+
+const COUNTER_NAMESPACE =
+    "rizwanpesi1-collab.github.io";
+
+
+/*
+   Increase counter and update display
+*/
+
+async function updateActionCounter(
+    action,
+    elementId
+){
+
+    try{
+
+        const url =
+            "https://counterapi.com/api/" +
+            encodeURIComponent(
+                COUNTER_NAMESPACE
+            ) +
+            "/" +
+            encodeURIComponent(action) +
+            "/cv";
+
+
+        const response =
+            await fetch(url);
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "Counter request failed"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const element =
+            document.getElementById(
+                elementId
+            );
+
+
+        if(
+            element &&
+            data.value !== undefined
+        ){
+
+            element.textContent =
+                data.value;
+
+        }
+
+
+    }catch(error){
+
+        console.log(
+            "Counter error:",
+            error
+        );
+
+    }
+
+}
+
+
+/*
+   Load existing counters
+   WITHOUT increasing them
+*/
+
+async function loadActionCounters(){
+
+    const counters = [
+
+        {
+            action:"pdf_save",
+            element:"pdfSaveCount"
+        },
+
+        {
+            action:"generate_cv",
+            element:"generateCount"
+        },
+
+        {
+            action:"print_cv",
+            element:"printCount"
+        }
+
+    ];
+
+
+    for(
+        const item of counters
+    ){
+
+        try{
+
+            const url =
+                "https://counterapi.com/api/" +
+                encodeURIComponent(
+                    COUNTER_NAMESPACE
+                ) +
+                "/" +
+                encodeURIComponent(
+                    item.action
+                ) +
+                "/cv?readOnly=true";
+
+
+            const response =
+                await fetch(url);
+
+
+            if(!response.ok){
+
+                continue;
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            const element =
+                document.getElementById(
+                    item.element
+                );
+
+
+            if(
+                element &&
+                data.value !== undefined
+            ){
+
+                element.textContent =
+                    data.value;
+
+            }
+
+
+        }catch(error){
+
+            console.log(
+                "Counter loading error:",
+                error
+            );
+
+        }
+
+    }
+
+}
 
 
 /* =====================================
@@ -776,45 +1008,55 @@ function generateCV(){
     pName.textContent =
         name || "Your Name";
 
-    pName.dir = "auto";
+    pName.dir =
+        "auto";
 
 
     /* Contact */
 
     const contactParts = [];
 
+
     if(email)
         contactParts.push(email);
+
 
     if(phone)
         contactParts.push(phone);
 
+
     if(address)
         contactParts.push(address);
+
 
     pContact.textContent =
         contactParts.length
         ? contactParts.join(" | ")
         : "Email | Contact | Address";
 
-    pContact.dir = "auto";
+
+    pContact.dir =
+        "auto";
 
 
     /* Education */
 
     pEducation.textContent =
-        education || "Your education details";
+        education ||
+        "Your education details";
 
 
     /* Experience */
 
     pExperience.textContent =
-        experience || "Your work experience";
+        experience ||
+        "Your work experience";
 
 
     /* Skills */
 
     pSkills.innerHTML = "";
+
 
     if(skills){
 
@@ -825,30 +1067,49 @@ function generateCV(){
             const value =
                 item.trim();
 
+
             if(value){
 
                 const tag =
-                    document.createElement("span");
+                    document.createElement(
+                        "span"
+                    );
 
-                tag.className = "tag";
 
-                tag.textContent = value;
+                tag.className =
+                    "tag";
 
-                tag.dir = "auto";
 
-                pSkills.appendChild(tag);
+                tag.textContent =
+                    value;
+
+
+                tag.dir =
+                    "auto";
+
+
+                pSkills.appendChild(
+                    tag
+                );
+
             }
+
         });
 
     }else{
 
-        addTag(pSkills,"Your Skills");
+        addTag(
+            pSkills,
+            "Your Skills"
+        );
+
     }
 
 
     /* Languages */
 
     pLanguages.innerHTML = "";
+
 
     if(languages){
 
@@ -859,25 +1120,44 @@ function generateCV(){
             const value =
                 item.trim();
 
+
             if(value){
 
                 const tag =
-                    document.createElement("span");
+                    document.createElement(
+                        "span"
+                    );
 
-                tag.className = "tag";
 
-                tag.textContent = value;
+                tag.className =
+                    "tag";
 
-                tag.dir = "auto";
 
-                pLanguages.appendChild(tag);
+                tag.textContent =
+                    value;
+
+
+                tag.dir =
+                    "auto";
+
+
+                pLanguages.appendChild(
+                    tag
+                );
+
             }
+
         });
 
     }else{
 
-        addTag(pLanguages,"Urdu");
+        addTag(
+            pLanguages,
+            "Urdu"
+        );
+
     }
+
 }
 
 
@@ -885,16 +1165,29 @@ function generateCV(){
    ADD TAG
 ===================================== */
 
-function addTag(parent,text){
+function addTag(
+    parent,
+    text
+){
 
     const tag =
-        document.createElement("span");
+        document.createElement(
+            "span"
+        );
 
-    tag.className = "tag";
 
-    tag.textContent = text;
+    tag.className =
+        "tag";
 
-    parent.appendChild(tag);
+
+    tag.textContent =
+        text;
+
+
+    parent.appendChild(
+        tag
+    );
+
 }
 
 
@@ -907,10 +1200,13 @@ function changeTemplate(){
     const selected =
         templateInput.value;
 
+
     cv.className =
         selected;
 
+
     generateCV();
+
 }
 
 
@@ -923,21 +1219,37 @@ function loadPhoto(){
     const file =
         photoInput.files[0];
 
+
     if(!file){
-        return;
-    }
-
-    if(!file.type.startsWith("image/")){
-
-        alert("Please select an image.");
-
-        photoInput.value = "";
 
         return;
+
     }
+
+
+    if(
+        !file.type.startsWith(
+            "image/"
+        )
+    ){
+
+        alert(
+            "Please select an image."
+        );
+
+
+        photoInput.value =
+            "";
+
+
+        return;
+
+    }
+
 
     const reader =
         new FileReader();
+
 
     reader.onload =
         function(event){
@@ -945,11 +1257,17 @@ function loadPhoto(){
             pPhoto.src =
                 event.target.result;
 
+
             pPhoto.style.display =
                 "block";
+
         };
 
-    reader.readAsDataURL(file);
+
+    reader.readAsDataURL(
+        file
+    );
+
 }
 
 
@@ -961,14 +1279,21 @@ async function savePDF(){
 
     generateCV();
 
-    if(typeof html2canvas === "undefined"){
+
+    if(
+        typeof html2canvas ===
+        "undefined"
+    ){
 
         alert(
             "PDF library load نہیں ہوئی۔ Internet connection check کریں۔"
         );
 
+
         return;
+
     }
+
 
     if(!window.jspdf){
 
@@ -976,14 +1301,21 @@ async function savePDF(){
             "PDF system load نہیں ہوا۔ Page refresh کریں۔"
         );
 
+
         return;
+
     }
 
 
     const button =
-        document.getElementById("pdfBtn");
+        document.getElementById(
+            "pdfBtn"
+        );
 
-    button.disabled = true;
+
+    button.disabled =
+        true;
+
 
     button.textContent =
         "⏳ Creating PDF...";
@@ -991,22 +1323,21 @@ async function savePDF(){
 
     try{
 
-        /*
-        Wait for browser rendering
-        */
+        await new Promise(
+            function(resolve){
 
-        await new Promise(function(resolve){
+                setTimeout(
+                    resolve,
+                    1000
+                );
 
-            setTimeout(resolve,1000);
-
-        });
+            }
+        );
 
 
         const canvas =
             await html2canvas(
-
                 cv,
-
                 {
                     scale:2,
                     useCORS:true,
@@ -1020,7 +1351,6 @@ async function savePDF(){
                     windowHeight:
                         cv.scrollHeight
                 }
-
             );
 
 
@@ -1033,31 +1363,41 @@ async function savePDF(){
 
         const {
             jsPDF
-        } = window.jspdf;
+        } =
+            window.jspdf;
 
 
         const pdf =
             new jsPDF({
 
-                orientation:"portrait",
+                orientation:
+                    "portrait",
 
-                unit:"mm",
+                unit:
+                    "mm",
 
-                format:"a4",
+                format:
+                    "a4",
 
-                compress:true
+                compress:
+                    true
+
             });
 
 
         const pageWidth =
-            pdf.internal.pageSize.getWidth();
+            pdf.internal.pageSize
+                .getWidth();
+
 
         const pageHeight =
-            pdf.internal.pageSize.getHeight();
+            pdf.internal.pageSize
+                .getHeight();
 
 
         const imgWidth =
             pageWidth;
+
 
         const imgHeight =
             canvas.height *
@@ -1068,7 +1408,9 @@ async function savePDF(){
         let heightLeft =
             imgHeight;
 
-        let position = 0;
+
+        let position =
+            0;
 
 
         pdf.addImage(
@@ -1081,15 +1423,21 @@ async function savePDF(){
         );
 
 
-        heightLeft -= pageHeight;
+        heightLeft -=
+            pageHeight;
 
 
-        while(heightLeft > 0){
+        while(
+            heightLeft > 0
+        ){
 
             position =
-                heightLeft - imgHeight;
+                heightLeft -
+                imgHeight;
+
 
             pdf.addPage();
+
 
             pdf.addImage(
                 imgData,
@@ -1100,32 +1448,62 @@ async function savePDF(){
                 imgHeight
             );
 
-            heightLeft -= pageHeight;
+
+            heightLeft -=
+                pageHeight;
+
         }
 
 
         let fileName =
             nameInput.value.trim();
 
+
         if(!fileName){
-            fileName = "Professional_CV";
+
+            fileName =
+                "Professional_CV";
+
         }
 
 
         fileName =
             fileName
-            .replace(/[\/\\:*?"<>|]/g,"_")
-            .replace(/\s+/g,"_");
+            .replace(
+                /[\/\\:*?"<>|]/g,
+                "_"
+            )
+            .replace(
+                /\s+/g,
+                "_"
+            );
 
+
+        /*
+           Save PDF
+        */
 
         pdf.save(
             fileName + ".pdf"
         );
 
 
+        /*
+           Count PDF save
+        */
+
+        updateActionCounter(
+            "pdf_save",
+            "pdfSaveCount"
+        );
+
+
     }catch(error){
 
-        console.error(error);
+        console.error(
+            error
+        );
+
 
         alert(
             "PDF بنانے میں مسئلہ آیا۔ دوبارہ کوشش کریں۔"
@@ -1134,10 +1512,13 @@ async function savePDF(){
     }
 
 
-    button.disabled = false;
+    button.disabled =
+        false;
+
 
     button.textContent =
         "📄 Save CV as PDF";
+
 }
 
 
@@ -1149,11 +1530,26 @@ function printCV(){
 
     generateCV();
 
-    setTimeout(function(){
 
-        window.print();
+    /*
+       Count Print
+    */
 
-    },300);
+    updateActionCounter(
+        "print_cv",
+        "printCount"
+    );
+
+
+    setTimeout(
+        function(){
+
+            window.print();
+
+        },
+        300
+    );
+
 }
 
 
@@ -1168,32 +1564,61 @@ function clearForm(){
             "کیا آپ تمام معلومات صاف کرنا چاہتے ہیں؟"
         );
 
+
     if(!confirmClear){
+
         return;
+
     }
 
 
-    nameInput.value = "";
-    emailInput.value = "";
-    phoneInput.value = "";
-    addressInput.value = "";
-    educationInput.value = "";
-    experienceInput.value = "";
-    skillsInput.value = "";
-    languagesInput.value = "";
+    nameInput.value =
+        "";
 
-    photoInput.value = "";
+    emailInput.value =
+        "";
 
-    templateInput.value = "t1";
+    phoneInput.value =
+        "";
 
-    cv.className = "t1";
+    addressInput.value =
+        "";
 
-    pPhoto.src = "";
+    educationInput.value =
+        "";
+
+    experienceInput.value =
+        "";
+
+    skillsInput.value =
+        "";
+
+    languagesInput.value =
+        "";
+
+
+    photoInput.value =
+        "";
+
+
+    templateInput.value =
+        "t1";
+
+
+    cv.className =
+        "t1";
+
+
+    pPhoto.src =
+        "";
+
 
     pPhoto.style.display =
         "none";
 
+
     generateCV();
+
 }
 
 
@@ -1201,16 +1626,39 @@ function clearForm(){
    BUTTON EVENTS
 ===================================== */
 
+
+/*
+   Generate counter ONLY counts
+   actual Generate CV button clicks.
+
+   Live preview does NOT increase
+   the Generate counter.
+*/
+
 document
-    .getElementById("generateBtn")
+    .getElementById(
+        "generateBtn"
+    )
     .addEventListener(
         "click",
-        generateCV
+        function(){
+
+            generateCV();
+
+
+            updateActionCounter(
+                "generate_cv",
+                "generateCount"
+            );
+
+        }
     );
 
 
 document
-    .getElementById("pdfBtn")
+    .getElementById(
+        "pdfBtn"
+    )
     .addEventListener(
         "click",
         savePDF
@@ -1218,7 +1666,9 @@ document
 
 
 document
-    .getElementById("printBtn")
+    .getElementById(
+        "printBtn"
+    )
     .addEventListener(
         "click",
         printCV
@@ -1226,7 +1676,9 @@ document
 
 
 document
-    .getElementById("clearBtn")
+    .getElementById(
+        "clearBtn"
+    )
     .addEventListener(
         "click",
         clearForm
@@ -1261,14 +1713,16 @@ photoInput
     skillsInput,
     languagesInput
 ]
-.forEach(function(input){
+.forEach(
+    function(input){
 
-    input.addEventListener(
-        "input",
-        generateCV
-    );
+        input.addEventListener(
+            "input",
+            generateCV
+        );
 
-});
+    }
+);
 
 
 /* =====================================
@@ -1276,6 +1730,14 @@ photoInput
 ===================================== */
 
 generateCV();
+
+
+/*
+   Load global counters
+   without increasing them
+*/
+
+loadActionCounters();
 
 </script>
 
