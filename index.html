@@ -16,6 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
+
 *{
     box-sizing:border-box;
 }
@@ -117,6 +118,7 @@ button:disabled{
     color:white;
 }
 
+
 /* ACTION COUNTERS */
 
 #actionCounters{
@@ -135,6 +137,106 @@ button:disabled{
     color:#17365d;
     font-weight:bold;
 }
+
+
+/* =========================
+   🤖 SMART AI ASSISTANT
+========================= */
+
+#smartAI{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    margin:20px 0;
+}
+
+#smartAI h2{
+    text-align:center;
+    margin-top:0;
+}
+
+.ai-intro{
+    text-align:center;
+    color:#555;
+    line-height:1.6;
+}
+
+.ai-chat{
+    height:330px;
+    overflow-y:auto;
+    background:#f5f7fa;
+    border:1px solid #d9dee7;
+    border-radius:12px;
+    padding:12px;
+    margin:15px 0;
+}
+
+.ai-message{
+    max-width:88%;
+    padding:11px 14px;
+    margin:8px 0;
+    border-radius:12px;
+    white-space:pre-line;
+    line-height:1.55;
+    overflow-wrap:anywhere;
+}
+
+.ai-bot{
+    background:#e7edf5;
+    color:#222;
+    margin-right:auto;
+}
+
+.ai-user{
+    background:#17365d;
+    color:white;
+    margin-left:auto;
+}
+
+.ai-input{
+    min-height:85px;
+    margin-top:0;
+}
+
+.ai-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:10px;
+}
+
+.ai-ask{
+    background:#17365d;
+    color:white;
+    flex:1;
+}
+
+.ai-clear{
+    background:#dc3545;
+    color:white;
+}
+
+.ai-quick{
+    background:#eef2f7;
+    color:#17365d;
+    border:1px solid #ccd3dd;
+}
+
+.ai-result-box{
+    margin-top:15px;
+    background:#f8fafc;
+    border:1px solid #d9dee7;
+    padding:15px;
+    border-radius:10px;
+}
+
+.ai-result-title{
+    font-weight:bold;
+    color:#17365d;
+    margin-bottom:8px;
+}
+
 
 /* CV */
 
@@ -175,7 +277,6 @@ button:disabled{
     color:#17365d;
     font-size:34px;
     line-height:1.15;
-
     white-space:normal !important;
     overflow:visible !important;
     text-overflow:clip !important;
@@ -223,6 +324,7 @@ button:disabled{
     font-size:13px;
     overflow-wrap:anywhere;
 }
+
 
 /* Templates */
 
@@ -388,6 +490,7 @@ button:disabled{
     border-color:#e91e63;
 }
 
+
 /* Mobile */
 
 @media(max-width:700px){
@@ -418,7 +521,17 @@ button:disabled{
         width:100%;
         text-align:center;
     }
+
+    .ai-actions{
+        flex-direction:column;
+    }
+
+    .ai-actions button{
+        width:100%;
+    }
+
 }
+
 
 /* Print */
 
@@ -430,7 +543,8 @@ button:disabled{
 
     .panel,
     .title,
-    #actionCounters{
+    #actionCounters,
+    #smartAI{
         display:none;
     }
 
@@ -439,9 +553,12 @@ button:disabled{
         width:210mm;
         box-shadow:none;
     }
+
 }
+
 </style>
 </head>
+
 
 <body>
 
@@ -496,9 +613,7 @@ button:disabled{
 </div>
 
 
-<!-- =====================================
-     GLOBAL CV ACTION COUNTERS
-===================================== -->
+<!-- GLOBAL CV ACTION COUNTERS -->
 
 <div id="actionCounters">
 
@@ -520,11 +635,114 @@ button:disabled{
 </div>
 
 
+<!-- ==================================================
+     🤖 SMART AI ASSISTANT
+     API کے بغیر
+================================================== -->
+
+<div id="smartAI">
+
+    <h2>🤖 CV PRO AI Assistant</h2>
+
+    <div class="ai-intro">
+
+        آپ یہاں CV، Jobs، Skills، Interview اور
+        Professional Summary کے بارے میں سوال پوچھ سکتے ہیں۔
+
+        <br>
+
+        <b>مثال:</b>
+        "FA کے بعد CV میں کون سی skills لکھوں؟"
+
+    </div>
+
+
+    <div
+        id="aiChat"
+        class="ai-chat"
+    >
+
+        <div class="ai-message ai-bot">
+
+            السلام علیکم! 👋
+
+            میں CV PRO AI Smart Assistant ہوں۔
+
+            میں آپ کی CV کے مطابق
+            Professional Summary، Skills،
+            Job Description اور Interview
+            Questions میں مدد کر سکتا ہوں۔
+
+        </div>
+
+    </div>
+
+
+    <textarea
+        id="aiQuestion"
+        class="ai-input"
+        placeholder="اپنا سوال یہاں لکھیں..."
+    ></textarea>
+
+
+    <div class="ai-actions">
+
+        <button
+            id="aiAskBtn"
+            class="ai-ask"
+            type="button"
+        >
+            🤖 Ask AI
+        </button>
+
+        <button
+            id="aiClearBtn"
+            class="ai-clear"
+            type="button"
+        >
+            🗑️ Clear Chat
+        </button>
+
+    </div>
+
+
+    <div class="ai-actions">
+
+        <button
+            class="ai-quick"
+            type="button"
+            onclick="quickAI('میری CV کے لیے Professional Summary لکھ دو')"
+        >
+            ✍️ Professional Summary
+        </button>
+
+        <button
+            class="ai-quick"
+            type="button"
+            onclick="quickAI('میری CV کے لیے مناسب skills بتاؤ')"
+        >
+            ⭐ Skills
+        </button>
+
+        <button
+            class="ai-quick"
+            type="button"
+            onclick="quickAI('مجھے job interview کی تیاری کرواؤ')"
+        >
+            🎯 Interview
+        </button>
+
+    </div>
+
+</div>
+
+
 <div class="panel">
 
 <h2>👤 Personal Information</h2>
 
 <label>Full Name</label>
+
 <input
     id="name"
     type="text"
@@ -532,6 +750,7 @@ button:disabled{
 >
 
 <label>Email</label>
+
 <input
     id="email"
     type="email"
@@ -539,6 +758,7 @@ button:disabled{
 >
 
 <label>Contact</label>
+
 <input
     id="phone"
     type="text"
@@ -546,17 +766,20 @@ button:disabled{
 >
 
 <label>Address</label>
+
 <textarea
     id="address"
     placeholder="Your address"
 ></textarea>
 
 <label>Profile Photo</label>
+
 <input
     id="photo"
     type="file"
     accept="image/*"
 >
+
 
 <h2>🎨 CV Template</h2>
 
@@ -575,12 +798,14 @@ button:disabled{
 
 </select>
 
+
 <h2>🎓 Education</h2>
 
 <textarea
     id="education"
     placeholder="FA / Intermediate&#10;Government Higher Secondary School&#10;Computer Diploma"
 ></textarea>
+
 
 <h2>💼 Work Experience</h2>
 
@@ -589,12 +814,14 @@ button:disabled{
     placeholder="Company Name&#10;Job Title&#10;Responsibilities"
 ></textarea>
 
+
 <h2>⭐ Skills</h2>
 
 <textarea
     id="skills"
     placeholder="Computer Skills, MS Office, Data Entry, Communication"
 ></textarea>
+
 
 <h2>🌐 Languages</h2>
 
@@ -814,10 +1041,6 @@ const COUNTER_NAMESPACE =
     "rizwanpesi1-collab.github.io";
 
 
-/*
-   Increase counter and update display
-*/
-
 async function updateActionCounter(
     action,
     elementId
@@ -880,11 +1103,6 @@ async function updateActionCounter(
 
 }
 
-
-/*
-   Load existing counters
-   WITHOUT increasing them
-*/
 
 async function loadActionCounters(){
 
@@ -1003,8 +1221,6 @@ function generateCV(){
         languagesInput.value.trim();
 
 
-    /* Name */
-
     pName.textContent =
         name || "Your Name";
 
@@ -1012,18 +1228,14 @@ function generateCV(){
         "auto";
 
 
-    /* Contact */
-
     const contactParts = [];
 
 
     if(email)
         contactParts.push(email);
 
-
     if(phone)
         contactParts.push(phone);
-
 
     if(address)
         contactParts.push(address);
@@ -1039,21 +1251,15 @@ function generateCV(){
         "auto";
 
 
-    /* Education */
-
     pEducation.textContent =
         education ||
         "Your education details";
 
 
-    /* Experience */
-
     pExperience.textContent =
         experience ||
         "Your work experience";
 
-
-    /* Skills */
 
     pSkills.innerHTML = "";
 
@@ -1070,26 +1276,9 @@ function generateCV(){
 
             if(value){
 
-                const tag =
-                    document.createElement(
-                        "span"
-                    );
-
-
-                tag.className =
-                    "tag";
-
-
-                tag.textContent =
-                    value;
-
-
-                tag.dir =
-                    "auto";
-
-
-                pSkills.appendChild(
-                    tag
+                addTag(
+                    pSkills,
+                    value
                 );
 
             }
@@ -1106,8 +1295,6 @@ function generateCV(){
     }
 
 
-    /* Languages */
-
     pLanguages.innerHTML = "";
 
 
@@ -1123,26 +1310,9 @@ function generateCV(){
 
             if(value){
 
-                const tag =
-                    document.createElement(
-                        "span"
-                    );
-
-
-                tag.className =
-                    "tag";
-
-
-                tag.textContent =
-                    value;
-
-
-                tag.dir =
-                    "auto";
-
-
-                pLanguages.appendChild(
-                    tag
+                addTag(
+                    pLanguages,
+                    value
                 );
 
             }
@@ -1182,6 +1352,10 @@ function addTag(
 
     tag.textContent =
         text;
+
+
+    tag.dir =
+        "auto";
 
 
     parent.appendChild(
@@ -1289,7 +1463,6 @@ async function savePDF(){
             "PDF library load نہیں ہوئی۔ Internet connection check کریں۔"
         );
 
-
         return;
 
     }
@@ -1300,7 +1473,6 @@ async function savePDF(){
         alert(
             "PDF system load نہیں ہوا۔ Page refresh کریں۔"
         );
-
 
         return;
 
@@ -1370,17 +1542,10 @@ async function savePDF(){
         const pdf =
             new jsPDF({
 
-                orientation:
-                    "portrait",
-
-                unit:
-                    "mm",
-
-                format:
-                    "a4",
-
-                compress:
-                    true
+                orientation:"portrait",
+                unit:"mm",
+                format:"a4",
+                compress:true
 
             });
 
@@ -1479,18 +1644,10 @@ async function savePDF(){
             );
 
 
-        /*
-           Save PDF
-        */
-
         pdf.save(
             fileName + ".pdf"
         );
 
-
-        /*
-           Count PDF save
-        */
 
         updateActionCounter(
             "pdf_save",
@@ -1531,10 +1688,6 @@ function printCV(){
     generateCV();
 
 
-    /*
-       Count Print
-    */
-
     updateActionCounter(
         "print_cv",
         "printCount"
@@ -1572,50 +1725,27 @@ function clearForm(){
     }
 
 
-    nameInput.value =
-        "";
+    nameInput.value = "";
+    emailInput.value = "";
+    phoneInput.value = "";
+    addressInput.value = "";
+    educationInput.value = "";
+    experienceInput.value = "";
+    skillsInput.value = "";
+    languagesInput.value = "";
 
-    emailInput.value =
-        "";
-
-    phoneInput.value =
-        "";
-
-    addressInput.value =
-        "";
-
-    educationInput.value =
-        "";
-
-    experienceInput.value =
-        "";
-
-    skillsInput.value =
-        "";
-
-    languagesInput.value =
-        "";
-
-
-    photoInput.value =
-        "";
-
+    photoInput.value = "";
 
     templateInput.value =
         "t1";
 
-
     cv.className =
         "t1";
 
-
-    pPhoto.src =
-        "";
-
+    pPhoto.src = "";
 
     pPhoto.style.display =
         "none";
-
 
     generateCV();
 
@@ -1626,15 +1756,6 @@ function clearForm(){
    BUTTON EVENTS
 ===================================== */
 
-
-/*
-   Generate counter ONLY counts
-   actual Generate CV button clicks.
-
-   Live preview does NOT increase
-   the Generate counter.
-*/
-
 document
     .getElementById(
         "generateBtn"
@@ -1644,7 +1765,6 @@ document
         function(){
 
             generateCV();
-
 
             updateActionCounter(
                 "generate_cv",
@@ -1725,6 +1845,549 @@ photoInput
 );
 
 
+/* =================================================
+   🤖 SMART AI — NO API
+================================================= */
+
+const aiQuestion =
+    document.getElementById(
+        "aiQuestion"
+    );
+
+const aiChat =
+    document.getElementById(
+        "aiChat"
+    );
+
+const aiAskBtn =
+    document.getElementById(
+        "aiAskBtn"
+    );
+
+const aiClearBtn =
+    document.getElementById(
+        "aiClearBtn"
+    );
+
+
+/* Add AI message */
+
+function addAIMessage(
+    text,
+    type
+){
+
+    const box =
+        document.createElement(
+            "div"
+        );
+
+
+    box.className =
+        "ai-message " +
+        (
+            type === "user"
+            ? "ai-user"
+            : "ai-bot"
+        );
+
+
+    box.textContent =
+        text;
+
+
+    aiChat.appendChild(
+        box
+    );
+
+
+    aiChat.scrollTop =
+        aiChat.scrollHeight;
+
+}
+
+
+/* Read CV */
+
+function getCVInformation(){
+
+    return {
+
+        name:
+            nameInput.value.trim(),
+
+        education:
+            educationInput.value.trim(),
+
+        experience:
+            experienceInput.value.trim(),
+
+        skills:
+            skillsInput.value.trim(),
+
+        languages:
+            languagesInput.value.trim()
+
+    };
+
+}
+
+
+/* Detect language */
+
+function isUrdu(text){
+
+    return /[\u0600-\u06FF]/.test(
+        text
+    );
+
+}
+
+
+/* Smart answer */
+
+function smartAIAnswer(
+    question
+){
+
+    const q =
+        question
+        .toLowerCase()
+        .trim();
+
+
+    const cvData =
+        getCVInformation();
+
+
+    const urdu =
+        isUrdu(question);
+
+
+    /* Professional Summary */
+
+    if(
+        q.includes("summary") ||
+        q.includes("profile") ||
+        q.includes("پروفیشنل") ||
+        q.includes("سمری") ||
+        q.includes("خلاصہ")
+    ){
+
+        const education =
+            cvData.education ||
+            "Intermediate";
+
+        const skills =
+            cvData.skills ||
+            "Computer skills, communication and MS Office";
+
+
+        if(urdu){
+
+            return (
+                "Professional Summary:\n\n" +
+
+                "میں ایک محنتی اور ذمہ دار امیدوار ہوں۔ " +
+                education +
+                " کی تعلیم کے ساتھ " +
+                skills +
+                " میں دلچسپی اور بنیادی مہارت رکھتا ہوں۔ " +
+                "میں نئی skills سیکھنے، ٹیم کے ساتھ کام کرنے " +
+                "اور ادارے کے اہداف حاصل کرنے کے لیے پُرعزم ہوں۔"
+            );
+
+        }
+
+
+        return (
+            "Professional Summary:\n\n" +
+
+            "A hardworking and responsible candidate with " +
+            education +
+            " education and skills in " +
+            skills +
+            ". I am eager to learn new skills, work effectively " +
+            "with a team, and contribute to organizational goals."
+        );
+
+    }
+
+
+    /* Skills */
+
+    if(
+        q.includes("skill") ||
+        q.includes("skills") ||
+        q.includes("مہارت") ||
+        q.includes("سکل")
+    ){
+
+        if(urdu){
+
+            return (
+                "آپ اپنی CV میں یہ skills شامل کر سکتے ہیں:\n\n" +
+
+                "• MS Word\n" +
+                "• MS Excel\n" +
+                "• PowerPoint\n" +
+                "• Data Entry\n" +
+                "• Communication\n" +
+                "• Typing\n" +
+                "• Internet & Email\n" +
+                "• Time Management\n" +
+                "• Teamwork\n\n" +
+
+                "صرف وہی skills شامل کریں جو آپ واقعی جانتے ہیں۔"
+            );
+
+        }
+
+
+        return (
+            "Useful CV skills can include:\n\n" +
+
+            "• MS Word\n" +
+            "• MS Excel\n" +
+            "• PowerPoint\n" +
+            "• Data Entry\n" +
+            "• Communication\n" +
+            "• Typing\n" +
+            "• Internet & Email\n" +
+            "• Time Management\n" +
+            "• Teamwork\n\n" +
+
+            "Only include skills that you actually have."
+        );
+
+    }
+
+
+    /* Interview */
+
+    if(
+        q.includes("interview") ||
+        q.includes("انٹرویو") ||
+        q.includes("سوال")
+    ){
+
+        if(urdu){
+
+            return (
+                "Interview کی تیاری کے لیے یہ سوالات practice کریں:\n\n" +
+
+                "1. اپنے بارے میں بتائیں۔\n" +
+                "2. آپ یہ job کیوں کرنا چاہتے ہیں؟\n" +
+                "3. آپ کی strengths کیا ہیں؟\n" +
+                "4. آپ کی skills کیا ہیں؟\n" +
+                "5. آپ ہماری company میں کیوں کام کرنا چاہتے ہیں؟\n" +
+                "6. آپ pressure میں کیسے کام کرتے ہیں؟\n\n" +
+
+                "جوابات مختصر، صاف اور اعتماد کے ساتھ دیں۔"
+            );
+
+        }
+
+
+        return (
+            "Practice these interview questions:\n\n" +
+
+            "1. Tell me about yourself.\n" +
+            "2. Why do you want this job?\n" +
+            "3. What are your strengths?\n" +
+            "4. What are your skills?\n" +
+            "5. Why do you want to work for our company?\n" +
+            "6. How do you handle pressure?\n\n" +
+
+            "Keep your answers short, clear and confident."
+        );
+
+    }
+
+
+    /* Job */
+
+    if(
+        q.includes("job") ||
+        q.includes("jobs") ||
+        q.includes("نوکری") ||
+        q.includes("جاب") ||
+        q.includes("کام")
+    ){
+
+        if(urdu){
+
+            return (
+                "آپ اپنی تعلیم اور skills کے مطابق " +
+                "Computer Operator، Data Entry Operator، " +
+                "Office Assistant، Customer Support یا " +
+                "Junior Clerk جیسی jobs دیکھ سکتے ہیں۔\n\n" +
+
+                "اپنی CV میں education، computer skills، " +
+                "typing اور communication skills واضح رکھیں۔"
+            );
+
+        }
+
+
+        return (
+            "Depending on your education and skills, " +
+            "you can consider Computer Operator, Data Entry Operator, " +
+            "Office Assistant, Customer Support or Junior Clerk roles.\n\n" +
+
+            "Keep your education, computer skills, typing and " +
+            "communication skills clear on your CV."
+        );
+
+    }
+
+
+    /* Education */
+
+    if(
+        q.includes("education") ||
+        q.includes("تعلیم") ||
+        q.includes("qualification") ||
+        q.includes("کوالیفکیشن")
+    ){
+
+        if(urdu){
+
+            return (
+                "CV میں اپنی education اس ترتیب سے لکھیں:\n\n" +
+
+                "Qualification\n" +
+                "Institution\n" +
+                "Year / Result\n\n" +
+
+                "مثال:\n" +
+                "Intermediate (FA)\n" +
+                "Government Higher Secondary School\n" +
+                "2026"
+            );
+
+        }
+
+
+        return (
+            "Write education in this format:\n\n" +
+
+            "Qualification\n" +
+            "Institution\n" +
+            "Year / Result\n\n" +
+
+            "Example:\n" +
+            "Intermediate (FA)\n" +
+            "Government Higher Secondary School\n" +
+            "2026"
+        );
+
+    }
+
+
+    /* CV improvement */
+
+    if(
+        q.includes("improve") ||
+        q.includes("better") ||
+        q.includes("cv") ||
+        q.includes("resume") ||
+        q.includes("بہتر") ||
+        q.includes("سی وی")
+    ){
+
+        if(urdu){
+
+            return (
+                "آپ کی CV بہتر بنانے کے لیے:\n\n" +
+
+                "1. Professional Summary شامل کریں۔\n" +
+                "2. Relevant skills لکھیں۔\n" +
+                "3. Education واضح انداز میں لکھیں۔\n" +
+                "4. Experience میں responsibilities لکھیں۔\n" +
+                "5. Spelling اور contact information check کریں۔\n" +
+                "6. CV کو مختصر اور صاف رکھیں۔"
+            );
+
+        }
+
+
+        return (
+            "To improve your CV:\n\n" +
+
+            "1. Add a professional summary.\n" +
+            "2. Include relevant skills.\n" +
+            "3. Present education clearly.\n" +
+            "4. Add responsibilities under experience.\n" +
+            "5. Check spelling and contact information.\n" +
+            "6. Keep the CV clean and concise."
+        );
+
+    }
+
+
+    /* Default */
+
+    if(urdu){
+
+        return (
+            "میں آپ کی CV اور career سے متعلق مدد کر سکتا ہوں۔ 😊\n\n" +
+
+            "آپ مجھ سے پوچھ سکتے ہیں:\n\n" +
+
+            "• میری CV بہتر کرو\n" +
+            "• Professional Summary لکھو\n" +
+            "• CV میں skills کیا لکھوں؟\n" +
+            "• Job interview کی تیاری کرواؤ\n" +
+            "• Education کیسے لکھوں؟\n" +
+            "• میرے لیے مناسب job کون سی ہے؟"
+        );
+
+    }
+
+
+    return (
+        "I can help you with your CV and career. 😊\n\n" +
+
+        "You can ask me:\n\n" +
+
+        "• Improve my CV\n" +
+        "• Write a professional summary\n" +
+        "• What skills should I add?\n" +
+        "• Help me prepare for an interview\n" +
+        "• How should I write my education?\n" +
+        "• What jobs may suit my skills?"
+    );
+
+}
+
+
+/* Ask Smart AI */
+
+function askSmartAI(){
+
+    const question =
+        aiQuestion.value.trim();
+
+
+    if(!question){
+
+        alert(
+            "پہلے اپنا سوال لکھیں۔"
+        );
+
+        return;
+
+    }
+
+
+    addAIMessage(
+        question,
+        "user"
+    );
+
+
+    aiQuestion.value =
+        "";
+
+
+    aiAskBtn.disabled =
+        true;
+
+
+    aiAskBtn.textContent =
+        "⏳ Thinking...";
+
+
+    setTimeout(
+        function(){
+
+            const answer =
+                smartAIAnswer(
+                    question
+                );
+
+
+            addAIMessage(
+                answer,
+                "bot"
+            );
+
+
+            aiAskBtn.disabled =
+                false;
+
+
+            aiAskBtn.textContent =
+                "🤖 Ask AI";
+
+        },
+        500
+    );
+
+}
+
+
+/* Quick buttons */
+
+function quickAI(
+    text
+){
+
+    aiQuestion.value =
+        text;
+
+    askSmartAI();
+
+}
+
+
+/* Ask button */
+
+aiAskBtn.addEventListener(
+    "click",
+    askSmartAI
+);
+
+
+/* Enter */
+
+aiQuestion.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Enter" &&
+            !event.shiftKey
+        ){
+
+            event.preventDefault();
+
+            askSmartAI();
+
+        }
+
+    }
+);
+
+
+/* Clear AI chat */
+
+aiClearBtn.addEventListener(
+    "click",
+    function(){
+
+        aiChat.innerHTML = "";
+
+        addAIMessage(
+            "چیٹ صاف کر دی گئی ہے۔ 😊\nدوبارہ سوال پوچھیں۔",
+            "bot"
+        );
+
+    }
+);
+
+
 /* =====================================
    INITIAL CV
 ===================================== */
@@ -1732,10 +2395,7 @@ photoInput
 generateCV();
 
 
-/*
-   Load global counters
-   without increasing them
-*/
+/* Load global counters */
 
 loadActionCounters();
 
