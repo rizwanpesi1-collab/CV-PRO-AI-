@@ -8,7 +8,7 @@
 
 <meta name="google-site-verification" content="3cgMNksrqbAsy88FaT5iJcy_KwvV0A6yxqlGe6OJK2E" />
 
-<!-- Google AdSense -->
+<!-- Google AdSense - ORIGINAL CODE UNCHANGED -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4849304684017559"
      crossorigin="anonymous"></script>
 
@@ -120,9 +120,6 @@ button:disabled{
     color:white;
 }
 
-
-/* ACTION COUNTERS */
-
 #actionCounters{
     display:flex;
     flex-wrap:wrap;
@@ -139,11 +136,6 @@ button:disabled{
     color:#17365d;
     font-weight:bold;
 }
-
-
-/* =========================
-   🤖 SMART AI ASSISTANT
-========================= */
 
 #smartAI{
     background:white;
@@ -239,9 +231,6 @@ button:disabled{
     margin-bottom:8px;
 }
 
-
-/* CV */
-
 #cv{
     width:210mm;
     min-height:297mm;
@@ -326,9 +315,6 @@ button:disabled{
     font-size:13px;
     overflow-wrap:anywhere;
 }
-
-
-/* Templates */
 
 .t1 .cv-header{
     border-bottom-color:#17365d;
@@ -492,9 +478,6 @@ button:disabled{
     border-color:#e91e63;
 }
 
-
-/* Mobile */
-
 @media(max-width:700px){
 
     #cv{
@@ -534,9 +517,6 @@ button:disabled{
 
 }
 
-
-/* Print */
-
 @media print{
 
     body{
@@ -546,7 +526,8 @@ button:disabled{
     .panel,
     .title,
     #actionCounters,
-    #smartAI{
+    #smartAI,
+    .adsterra-ad{
         display:none;
     }
 
@@ -561,12 +542,12 @@ button:disabled{
 </style>
 </head>
 
-
 <body>
 
 <!-- ==================================================
      GOOGLE ADSENSE AD - TOP
-     ================================================== -->
+     ORIGINAL CODE UNCHANGED
+================================================== -->
 
 <div style="width:100%; margin:0 auto 15px; text-align:center;">
 
@@ -586,6 +567,13 @@ button:disabled{
 <!-- GOOGLE ADSENSE AD - TOP END -->
 
 
+<!-- ==================================================
+     ADSTERRA CODE 1
+================================================== -->
+
+<script src="https://pl31300815.profitableratecpmnetwork.com/f6/de/0b/f6de0ba90a9005d1a13a4da9a127b124.js"></script>
+
+
 <div class="app">
 
 <h1 class="title">📄 CV PRO AI</h1>
@@ -595,7 +583,6 @@ button:disabled{
 
 <div style="text-align:center; margin:10px 0 15px;">
 
-<!-- Traffic Counter https://counter.gratis BEGINN -->
 <a href='https://counter.gratis/?language=en&ID=8ed7e952' target='_top'>
 
 <img
@@ -632,8 +619,6 @@ button:disabled{
 )
 </script>
 
-<!-- Traffic Counter https://counter.gratis ENDE -->
-
 </div>
 
 
@@ -661,7 +646,6 @@ button:disabled{
 
 <!-- ==================================================
      🤖 SMART AI ASSISTANT
-     API کے بغیر
 ================================================== -->
 
 <div id="smartAI">
@@ -680,11 +664,7 @@ button:disabled{
 
     </div>
 
-
-    <div
-        id="aiChat"
-        class="ai-chat"
-    >
+    <div id="aiChat" class="ai-chat">
 
         <div class="ai-message ai-bot">
 
@@ -701,13 +681,11 @@ button:disabled{
 
     </div>
 
-
     <textarea
         id="aiQuestion"
         class="ai-input"
         placeholder="اپنا سوال یہاں لکھیں..."
     ></textarea>
-
 
     <div class="ai-actions">
 
@@ -728,7 +706,6 @@ button:disabled{
         </button>
 
     </div>
-
 
     <div class="ai-actions">
 
@@ -757,6 +734,17 @@ button:disabled{
         </button>
 
     </div>
+
+</div>
+
+
+<!-- ==================================================
+     ADSTERRA CODE 2
+================================================== -->
+
+<div class="adsterra-ad" style="width:100%; text-align:center; margin:20px 0;">
+
+<script src="https://pl31300816.profitableratecpmnetwork.com/75/11/4e/75114e77a42d083ff50469032177085d.js"></script>
 
 </div>
 
@@ -992,6 +980,28 @@ button:disabled{
     </div>
 
 </div>
+
+
+<!-- ==================================================
+     ADSTERRA CODE 3 - 728x90 BANNER
+================================================== -->
+
+<div class="adsterra-ad" style="width:100%; text-align:center; margin:20px auto; overflow:hidden;">
+
+<script>
+  atOptions = {
+    'key' : '88f78f9d4a400e810d44142e1a2cc916',
+    'format' : 'iframe',
+    'height' : 90,
+    'width' : 728,
+    'params' : {}
+  };
+</script>
+
+<script src="https://www.highrevenueformat.com/88f78f9d4a400e810d44142e1a2cc916/invoke.js"></script>
+
+</div>
+
 
 </div>
 
@@ -1894,8 +1904,6 @@ const aiClearBtn =
     );
 
 
-/* Add AI message */
-
 function addAIMessage(
     text,
     type
@@ -1931,8 +1939,6 @@ function addAIMessage(
 }
 
 
-/* Read CV */
-
 function getCVInformation(){
 
     return {
@@ -1957,8 +1963,6 @@ function getCVInformation(){
 }
 
 
-/* Detect language */
-
 function isUrdu(text){
 
     return /[\u0600-\u06FF]/.test(
@@ -1967,8 +1971,6 @@ function isUrdu(text){
 
 }
 
-
-/* Smart answer */
 
 function smartAIAnswer(
     question
@@ -1987,8 +1989,6 @@ function smartAIAnswer(
     const urdu =
         isUrdu(question);
 
-
-    /* Professional Summary */
 
     if(
         q.includes("summary") ||
@@ -2038,8 +2038,6 @@ function smartAIAnswer(
     }
 
 
-    /* Skills */
-
     if(
         q.includes("skill") ||
         q.includes("skills") ||
@@ -2087,8 +2085,6 @@ function smartAIAnswer(
     }
 
 
-    /* Interview */
-
     if(
         q.includes("interview") ||
         q.includes("انٹرویو") ||
@@ -2129,8 +2125,6 @@ function smartAIAnswer(
     }
 
 
-    /* Job */
-
     if(
         q.includes("job") ||
         q.includes("jobs") ||
@@ -2165,8 +2159,6 @@ function smartAIAnswer(
 
     }
 
-
-    /* Education */
 
     if(
         q.includes("education") ||
@@ -2209,8 +2201,6 @@ function smartAIAnswer(
     }
 
 
-    /* CV improvement */
-
     if(
         q.includes("improve") ||
         q.includes("better") ||
@@ -2250,8 +2240,6 @@ function smartAIAnswer(
     }
 
 
-    /* Default */
-
     if(urdu){
 
         return (
@@ -2285,8 +2273,6 @@ function smartAIAnswer(
 
 }
 
-
-/* Ask Smart AI */
 
 function askSmartAI(){
 
@@ -2352,8 +2338,6 @@ function askSmartAI(){
 }
 
 
-/* Quick buttons */
-
 function quickAI(
     text
 ){
@@ -2366,15 +2350,11 @@ function quickAI(
 }
 
 
-/* Ask button */
-
 aiAskBtn.addEventListener(
     "click",
     askSmartAI
 );
 
-
-/* Enter */
 
 aiQuestion.addEventListener(
     "keydown",
@@ -2395,8 +2375,6 @@ aiQuestion.addEventListener(
 );
 
 
-/* Clear AI chat */
-
 aiClearBtn.addEventListener(
     "click",
     function(){
@@ -2412,14 +2390,7 @@ aiClearBtn.addEventListener(
 );
 
 
-/* =====================================
-   INITIAL CV
-===================================== */
-
 generateCV();
-
-
-/* Load global counters */
 
 loadActionCounters();
 
