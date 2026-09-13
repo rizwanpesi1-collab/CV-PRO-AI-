@@ -18,32 +18,47 @@
 
 <style>
 *{box-sizing:border-box}
+
 body{
- margin:0;background:#eef2f7;
- font-family:Arial,"Noto Sans",sans-serif;color:#222
+ margin:0;
+ background:linear-gradient(135deg,#eef2f7,#e7ddff,#fff0f6,#dff7ff);
+ background-attachment:fixed;
+ font-family:Arial,"Noto Sans",sans-serif;
+ color:#222
 }
+
 .app{max-width:1200px;margin:auto;padding:15px}
+
 .title{text-align:center;color:#17365d;margin:10px 0 20px}
+
 .panel,#smartAI{
  background:white;padding:20px;border-radius:15px;
  box-shadow:0 5px 20px rgba(0,0,0,.08);margin-bottom:20px
 }
+
 h2{color:#17365d;margin-top:20px}
+
 label{display:block;font-weight:bold;margin-top:12px}
+
 input,textarea,select{
  width:100%;padding:12px;margin-top:6px;
  border:1px solid #ccd3dd;border-radius:8px;
  font-size:16px;font-family:inherit
 }
+
 textarea{min-height:90px;resize:vertical}
+
 .buttons,.ai-actions{
  display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:20px
 }
+
 button{
  border:0;padding:13px 18px;border-radius:9px;
  cursor:pointer;font-size:15px;font-weight:bold
 }
+
 button:disabled{opacity:.6;cursor:not-allowed}
+
 .generate{background:#17365d;color:white}
 .pdf{background:#198754;color:white}
 .clear{background:#dc3545;color:white}
@@ -53,6 +68,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
  display:flex;flex-wrap:wrap;justify-content:center;
  gap:10px;margin:15px 0 20px
 }
+
 .action-counter{
  background:white;padding:10px 16px;border-radius:10px;
  box-shadow:0 2px 8px rgba(0,0,0,.08);
@@ -69,25 +85,32 @@ button:disabled{opacity:.6;cursor:not-allowed}
  margin:20px auto;
  overflow:hidden
 }
+
 .ad-label{
  font-size:11px;color:#999;margin-bottom:5px
 }
 
 #smartAI h2{text-align:center;margin-top:0}
+
 .ai-intro{text-align:center;color:#555;line-height:1.6}
+
 .ai-chat{
  height:330px;overflow-y:auto;background:#f5f7fa;
  border:1px solid #d9dee7;border-radius:12px;
  padding:12px;margin:15px 0
 }
+
 .ai-message{
  max-width:88%;padding:11px 14px;margin:8px 0;
  border-radius:12px;white-space:pre-line;
  line-height:1.55;overflow-wrap:anywhere
 }
+
 .ai-bot{background:#e7edf5;color:#222;margin-right:auto}
 .ai-user{background:#17365d;color:white;margin-left:auto}
+
 .ai-input{min-height:85px;margin-top:0}
+
 .ai-ask{background:#17365d;color:white;flex:1}
 .ai-clear{background:#dc3545;color:white}
 .ai-quick{background:#eef2f7;color:#17365d;border:1px solid #ccd3dd}
@@ -97,35 +120,45 @@ button:disabled{opacity:.6;cursor:not-allowed}
  margin:20px auto;padding:18mm;
  box-shadow:0 5px 25px rgba(0,0,0,.15);overflow:hidden
 }
+
 .cv-header{
  display:flex;align-items:flex-start;gap:22px;
  padding-bottom:20px;border-bottom:3px solid #17365d
 }
+
 .photo{
  width:110px;height:110px;object-fit:cover;
  border-radius:10px;border:2px solid #ddd;flex-shrink:0
 }
+
 .info{flex:1;min-width:0}
+
 .name{
  margin:0;color:#17365d;font-size:34px;line-height:1.15;
  white-space:normal!important;overflow:visible!important;
  text-overflow:clip!important;overflow-wrap:anywhere!important;
  word-break:break-word!important
 }
+
 .contact{
  margin-top:10px;line-height:1.7;
  overflow-wrap:anywhere;word-break:break-word
 }
+
 .section{margin-top:22px}
+
 .section-title{
  color:#17365d;font-size:19px;font-weight:bold;
  border-bottom:2px solid #17365d;padding-bottom:5px;margin-bottom:10px
 }
+
 .content{
  white-space:pre-line;line-height:1.7;
  overflow-wrap:anywhere;word-break:break-word
 }
+
 .tags{display:flex;flex-wrap:wrap;gap:8px}
+
 .tag{
  background:#edf2f7;padding:6px 10px;border-radius:20px;
  font-size:13px;overflow-wrap:anywhere
@@ -174,20 +207,46 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .t10 .section-title{border-color:#e91e63}
 
 @media(max-width:700px){
- #cv{width:100%;min-height:auto;padding:20px}
+
+ #cv{
+  width:100%;
+  min-height:auto;
+  padding:20px
+ }
+
  .cv-header{flex-direction:column}
+
  .info{width:100%}
+
  .name{font-size:27px}
+
  .buttons button{width:100%}
- .action-counter{width:100%;text-align:center}
+
+ .action-counter{
+  width:100%;
+  text-align:center
+ }
+
  .ai-actions{flex-direction:column}
+
  .ai-actions button{width:100%}
+
 }
 
 @media print{
+
  body{background:white}
- .panel,.title,#actionCounters,#smartAI,.adsterra-ad{display:none}
- #cv{margin:0;width:210mm;box-shadow:none}
+
+ .panel,.title,#actionCounters,#smartAI,.adsterra-ad{
+  display:none
+ }
+
+ #cv{
+  margin:0;
+  width:210mm;
+  box-shadow:none
+ }
+
 }
 </style>
 </head>
@@ -198,50 +257,104 @@ button:disabled{opacity:.6;cursor:not-allowed}
 
 <h1 class="title">📄 CV PRO AI</h1>
 
+
+<!-- ================================================= -->
+<!-- ADSTERRA CODE 5 - NEW LINK AT TOP -->
+<!-- ================================================= -->
+
+<div class="adsterra-ad">
+
+<div style="width:100%;max-width:728px">
+
+<div class="ad-label">Advertisement</div>
+
+<a
+href="https://www.profitableratecpmnetwork.com/qufifx1b?key=38b946a670bfe376426205266f29b352"
+target="_blank"
+rel="noopener noreferrer"
+style="
+display:block;
+width:100%;
+padding:18px 20px;
+border-radius:12px;
+text-decoration:none;
+font-weight:bold;
+font-size:16px;
+color:white;
+background:linear-gradient(135deg,#17365d,#7b2cbf,#e91e63);
+box-shadow:0 4px 15px rgba(0,0,0,.15);
+">
+🔥 Sponsored Advertisement
+</a>
+
+</div>
+
+</div>
+
+
 <!-- ================================================= -->
 <!-- ADSTERRA CODE 1 -->
 <!-- ================================================= -->
+
 <div class="adsterra-ad">
+
 <div>
+
 <div class="ad-label">Advertisement</div>
+
 <script src="https://pl31300815.profitableratecpmnetwork.com/f6/de/0b/f6de0ba90a9005d1a13a4da9a127b124.js"></script>
+
 </div>
+
 </div>
 
 
 <!-- DAILY VISITOR COUNTER -->
+
 <div style="text-align:center;margin:10px 0 15px">
+
 <a href="https://counter.gratis/?language=en&ID=8ed7e952" target="_top">
+
 <img
 src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
 id="cg_8ed7e952"
 alt="Free Counter"
 title="Counter Statistics">
+
 <noscript>
+
 <img
 src="https://besucherzaehler.gratis/counter.php?ID=8ed7e952&STYLE=576"
 alt="Free Counter"
 title="Counter Statistics">
+
 </noscript>
+
 </a>
 
 <script>
+
 (function(i,c){
+
  i.src=c+
  '&LANG='+encodeURIComponent(navigator.language)+
  '&RES='+screen.width+'x'+screen.height+
  '&REF='+encodeURIComponent(document.referrer)+
  '&LOC='+encodeURIComponent(location.href)+
  '&NAVI='+encodeURIComponent(navigator.userAgent)
+
 })(
  document.getElementById('cg_8ed7e952'),
  'https://besucherzaehler.gratis/counter.php?ID=8ed7e952&STYLE=576'
 )
+
 </script>
+
 </div>
 
 
 <!-- GLOBAL CV ACTION COUNTERS -->
+
 <div id="actionCounters">
 
 <div class="action-counter">
@@ -265,32 +378,47 @@ title="Counter Statistics">
 <!-- ================================================= -->
 <!-- ADSTERRA CODE 2 -->
 <!-- ================================================= -->
+
 <div class="adsterra-ad">
+
 <div>
+
 <div class="ad-label">Advertisement</div>
+
 <script src="https://pl31300816.profitableratecpmnetwork.com/75/11/4e/75114e77a42d083ff50469032177085d.js"></script>
+
 </div>
+
 </div>
 
 
 <!-- SMART AI -->
+
 <div id="smartAI">
 
 <h2>🤖 CV PRO AI Assistant</h2>
 
 <div class="ai-intro">
+
 آپ یہاں CV، Jobs، Skills، Interview اور Professional Summary کے بارے میں سوال پوچھ سکتے ہیں۔
+
 <br>
+
 <b>مثال:</b> "FA کے بعد CV میں کون سی skills لکھوں؟"
+
 </div>
 
 <div id="aiChat" class="ai-chat">
 
 <div class="ai-message ai-bot">
+
 السلام علیکم! 👋
+
 میں CV PRO AI Smart Assistant ہوں۔
+
 میں آپ کی CV کے مطابق Professional Summary، Skills،
 Job Description اور Interview Questions میں مدد کر سکتا ہوں۔
+
 </div>
 
 </div>
@@ -314,17 +442,23 @@ placeholder="اپنا سوال یہاں لکھیں..."></textarea>
 
 <div class="ai-actions">
 
-<button class="ai-quick" type="button"
+<button
+class="ai-quick"
+type="button"
 onclick="quickAI('میری CV کے لیے Professional Summary لکھ دو')">
 ✍️ Professional Summary
 </button>
 
-<button class="ai-quick" type="button"
+<button
+class="ai-quick"
+type="button"
 onclick="quickAI('میری CV کے لیے مناسب skills بتاؤ')">
 ⭐ Skills
 </button>
 
-<button class="ai-quick" type="button"
+<button
+class="ai-quick"
+type="button"
 onclick="quickAI('مجھے job interview کی تیاری کرواؤ')">
 🎯 Interview
 </button>
@@ -335,32 +469,49 @@ onclick="quickAI('مجھے job interview کی تیاری کرواؤ')">
 
 
 <!-- PERSONAL INFORMATION -->
+
 <div class="panel">
 
 <h2>👤 Personal Information</h2>
 
 <label>Full Name</label>
-<input id="name" type="text"
+
+<input
+id="name"
+type="text"
 placeholder="محمد رضوان / Muhammad Rizwan">
 
 <label>Email</label>
-<input id="email" type="email"
+
+<input
+id="email"
+type="email"
 placeholder="example@email.com">
 
 <label>Contact</label>
-<input id="phone" type="text"
+
+<input
+id="phone"
+type="text"
 placeholder="+92 300 1234567">
 
 <label>Address</label>
-<textarea id="address"
+
+<textarea
+id="address"
 placeholder="Your address"></textarea>
 
 <label>Profile Photo</label>
-<input id="photo" type="file" accept="image/*">
+
+<input
+id="photo"
+type="file"
+accept="image/*">
 
 <h2>🎨 CV Template</h2>
 
 <select id="template">
+
 <option value="t1">Template 1 - Classic</option>
 <option value="t2">Template 2 - Modern</option>
 <option value="t3">Template 3 - Elegant</option>
@@ -371,30 +522,35 @@ placeholder="Your address"></textarea>
 <option value="t8">Template 8 - Orange</option>
 <option value="t9">Template 9 - Minimal</option>
 <option value="t10">Template 10 - Pink</option>
+
 </select>
 
 <h2>🎓 Education</h2>
 
-<textarea id="education"
+<textarea
+id="education"
 placeholder="FA / Intermediate
 Government Higher Secondary School
 Computer Diploma"></textarea>
 
 <h2>💼 Work Experience</h2>
 
-<textarea id="experience"
+<textarea
+id="experience"
 placeholder="Company Name
 Job Title
 Responsibilities"></textarea>
 
 <h2>⭐ Skills</h2>
 
-<textarea id="skills"
+<textarea
+id="skills"
 placeholder="Computer Skills, MS Office, Data Entry, Communication"></textarea>
 
 <h2>🌐 Languages</h2>
 
-<textarea id="languages"
+<textarea
+id="languages"
 placeholder="Urdu, English, Punjabi"></textarea>
 
 <div class="buttons">
@@ -421,11 +577,13 @@ placeholder="Urdu, English, Punjabi"></textarea>
 
 
 <!-- CV PREVIEW -->
+
 <div id="cv" class="t1">
 
 <div class="cv-header">
 
-<img id="pPhoto"
+<img
+id="pPhoto"
 class="photo"
 style="display:none"
 alt="Profile Photo">
@@ -436,41 +594,69 @@ alt="Profile Photo">
 Your Name
 </h1>
 
-<div id="pContact"
+<div
+id="pContact"
 class="contact"
 dir="auto">
 Email | Contact | Address
 </div>
 
 </div>
+
 </div>
 
 
 <div class="section">
-<div class="section-title">EDUCATION</div>
-<div id="pEducation" class="content" dir="auto">
+
+<div class="section-title">
+EDUCATION
+</div>
+
+<div
+id="pEducation"
+class="content"
+dir="auto">
 Your education details
 </div>
+
 </div>
 
 
 <div class="section">
-<div class="section-title">WORK EXPERIENCE</div>
-<div id="pExperience" class="content" dir="auto">
+
+<div class="section-title">
+WORK EXPERIENCE
+</div>
+
+<div
+id="pExperience"
+class="content"
+dir="auto">
 Your work experience
 </div>
+
 </div>
 
 
 <div class="section">
-<div class="section-title">SKILLS</div>
+
+<div class="section-title">
+SKILLS
+</div>
+
 <div id="pSkills" class="tags"></div>
+
 </div>
 
 
 <div class="section">
-<div class="section-title">LANGUAGES</div>
+
+<div class="section-title">
+LANGUAGES
+</div>
+
 <div id="pLanguages" class="tags"></div>
+
 </div>
 
 </div>
@@ -479,12 +665,15 @@ Your work experience
 <!-- ================================================= -->
 <!-- ADSTERRA CODE 3 - 728x90 -->
 <!-- ================================================= -->
+
 <div class="adsterra-ad">
 
 <div>
+
 <div class="ad-label">Advertisement</div>
 
 <script>
+
 atOptions = {
 'key':'88f78f9d4a400e810d44142e1a2cc916',
 'format':'iframe',
@@ -492,20 +681,24 @@ atOptions = {
 'width':728,
 'params':{}
 };
+
 </script>
 
 <script src="https://www.highrevenueformat.com/88f78f9d4a400e810d44142e1a2cc916/invoke.js"></script>
 
 </div>
+
 </div>
 
 
 <!-- ================================================= -->
 <!-- ADSTERRA CODE 4 -->
 <!-- ================================================= -->
+
 <div class="adsterra-ad">
 
 <div>
+
 <div class="ad-label">Advertisement</div>
 
 <script
@@ -517,6 +710,7 @@ src="https://pl31303504.profitableratecpmnetwork.com/45001da672934822dbbd3dec1d8
 <div id="container-45001da672934822dbbd3dec1d8182d5"></div>
 
 </div>
+
 </div>
 
 </div>
@@ -577,7 +771,9 @@ element.textContent=data.value;
 }
 
 }catch(error){
+
 console.log("Counter error:",error);
+
 }
 
 }
@@ -586,9 +782,11 @@ console.log("Counter error:",error);
 async function loadActionCounters(){
 
 const counters=[
+
 {action:"pdf_save",element:"pdfSaveCount"},
 {action:"generate_cv",element:"generateCount"},
 {action:"print_cv",element:"printCount"}
+
 ];
 
 for(const item of counters){
@@ -614,7 +812,9 @@ element.textContent=data.value;
 }
 
 }catch(error){
+
 console.log("Counter loading error:",error);
+
 }
 
 }
@@ -672,7 +872,9 @@ if(value)addTag(pSkills,value);
 });
 
 }else{
+
 addTag(pSkills,"Your Skills");
+
 }
 
 
@@ -689,7 +891,9 @@ if(value)addTag(pLanguages,value);
 });
 
 }else{
+
 addTag(pLanguages,"Urdu");
+
 }
 
 }
@@ -782,12 +986,17 @@ button.textContent="⏳ Creating PDF...";
 try{
 
 await new Promise(function(resolve){
+
 setTimeout(resolve,1000);
+
 });
 
 const canvas=await html2canvas(
+
 cv,
+
 {
+
 scale:2,
 useCORS:true,
 allowTaint:true,
@@ -795,7 +1004,9 @@ backgroundColor:"#ffffff",
 logging:false,
 windowWidth:cv.scrollWidth,
 windowHeight:cv.scrollHeight
+
 }
+
 );
 
 const imgData=canvas.toDataURL("image/jpeg",0.95);
@@ -803,10 +1014,12 @@ const imgData=canvas.toDataURL("image/jpeg",0.95);
 const {jsPDF}=window.jspdf;
 
 const pdf=new jsPDF({
+
 orientation:"portrait",
 unit:"mm",
 format:"a4",
 compress:true
+
 });
 
 const pageWidth=
@@ -824,12 +1037,14 @@ let heightLeft=imgHeight;
 let position=0;
 
 pdf.addImage(
+
 imgData,
 "JPEG",
 0,
 position,
 imgWidth,
 imgHeight
+
 );
 
 heightLeft-=pageHeight;
@@ -841,12 +1056,14 @@ position=heightLeft-imgHeight;
 pdf.addPage();
 
 pdf.addImage(
+
 imgData,
 "JPEG",
 0,
 position,
 imgWidth,
 imgHeight
+
 );
 
 heightLeft-=pageHeight;
@@ -856,7 +1073,9 @@ heightLeft-=pageHeight;
 let fileName=nameInput.value.trim();
 
 if(!fileName){
+
 fileName="Professional_CV";
+
 }
 
 fileName=fileName
@@ -898,7 +1117,9 @@ updateActionCounter(
 );
 
 setTimeout(function(){
+
 window.print();
+
 },300);
 
 }
@@ -990,6 +1211,7 @@ educationInput,
 experienceInput,
 skillsInput,
 languagesInput
+
 ].forEach(function(input){
 
 input.addEventListener(
@@ -1073,11 +1295,13 @@ const urdu=isUrdu(question);
 /* SUMMARY */
 
 if(
+
 q.includes("summary")||
 q.includes("profile")||
 q.includes("پروفیشنل")||
 q.includes("سمری")||
 q.includes("خلاصہ")
+
 ){
 
 const education=
@@ -1090,26 +1314,43 @@ cvData.skills||
 if(urdu){
 
 return(
+
 "Professional Summary:\n\n"+
+
 "میں ایک محنتی اور ذمہ دار امیدوار ہوں۔ "+
+
 education+
+
 " کی تعلیم کے ساتھ "+
+
 skills+
+
 " میں دلچسپی اور بنیادی مہارت رکھتا ہوں۔ "+
+
 "میں نئی skills سیکھنے، ٹیم کے ساتھ کام کرنے "+
+
 "اور ادارے کے اہداف حاصل کرنے کے لیے پُرعزم ہوں۔"
+
 );
 
 }
 
 return(
+
 "Professional Summary:\n\n"+
+
 "A hardworking and responsible candidate with "+
+
 education+
+
 " education and skills in "+
+
 skills+
+
 ". I am eager to learn new skills, work effectively "+
+
 "with a team, and contribute to organizational goals."
+
 );
 
 }
@@ -1118,42 +1359,68 @@ skills+
 /* SKILLS */
 
 if(
+
 q.includes("skill")||
 q.includes("skills")||
 q.includes("مہارت")||
 q.includes("سکل")
+
 ){
 
 if(urdu){
 
 return(
+
 "آپ اپنی CV میں یہ skills شامل کر سکتے ہیں:\n\n"+
+
 "• MS Word\n"+
+
 "• MS Excel\n"+
+
 "• PowerPoint\n"+
+
 "• Data Entry\n"+
+
 "• Communication\n"+
+
 "• Typing\n"+
+
 "• Internet & Email\n"+
+
 "• Time Management\n"+
+
 "• Teamwork\n\n"+
+
 "صرف وہی skills شامل کریں جو آپ واقعی جانتے ہیں۔"
+
 );
 
 }
 
 return(
+
 "Useful CV skills can include:\n\n"+
+
 "• MS Word\n"+
+
 "• MS Excel\n"+
+
 "• PowerPoint\n"+
+
 "• Data Entry\n"+
+
 "• Communication\n"+
+
 "• Typing\n"+
+
 "• Internet & Email\n"+
+
 "• Time Management\n"+
+
 "• Teamwork\n\n"+
+
 "Only include skills that you actually have."
+
 );
 
 }
@@ -1162,35 +1429,55 @@ return(
 /* INTERVIEW */
 
 if(
+
 q.includes("interview")||
 q.includes("انٹرویو")||
 q.includes("سوال")
+
 ){
 
 if(urdu){
 
 return(
+
 "Interview کی تیاری کے لیے یہ سوالات practice کریں:\n\n"+
+
 "1. اپنے بارے میں بتائیں۔\n"+
+
 "2. آپ یہ job کیوں کرنا چاہتے ہیں؟\n"+
+
 "3. آپ کی strengths کیا ہیں؟\n"+
+
 "4. آپ کی skills کیا ہیں؟\n"+
+
 "5. آپ ہماری company میں کیوں کام کرنا چاہتے ہیں؟\n"+
+
 "6. آپ pressure میں کیسے کام کرتے ہیں؟\n\n"+
+
 "جوابات مختصر، صاف اور اعتماد کے ساتھ دیں۔"
+
 );
 
 }
 
 return(
+
 "Practice these interview questions:\n\n"+
+
 "1. Tell me about yourself.\n"+
+
 "2. Why do you want this job?\n"+
+
 "3. What are your strengths?\n"+
+
 "4. What are your skills?\n"+
+
 "5. Why do you want to work for our company?\n"+
+
 "6. How do you handle pressure?\n\n"+
+
 "Keep your answers short, clear and confident."
+
 );
 
 }
@@ -1199,32 +1486,47 @@ return(
 /* JOB */
 
 if(
+
 q.includes("job")||
 q.includes("jobs")||
 q.includes("نوکری")||
 q.includes("جاب")||
 q.includes("کام")
+
 ){
 
 if(urdu){
 
 return(
+
 "آپ اپنی تعلیم اور skills کے مطابق "+
+
 "Computer Operator، Data Entry Operator، "+
+
 "Office Assistant، Customer Support یا "+
+
 "Junior Clerk جیسی jobs دیکھ سکتے ہیں۔\n\n"+
+
 "اپنی CV میں education، computer skills، "+
+
 "typing اور communication skills واضح رکھیں۔"
+
 );
 
 }
 
 return(
+
 "Depending on your education and skills, "+
+
 "you can consider Computer Operator, Data Entry Operator, "+
+
 "Office Assistant, Customer Support or Junior Clerk roles.\n\n"+
+
 "Keep your education, computer skills, typing and "+
+
 "communication skills clear on your CV."
+
 );
 
 }
@@ -1233,36 +1535,56 @@ return(
 /* EDUCATION */
 
 if(
+
 q.includes("education")||
 q.includes("تعلیم")||
 q.includes("qualification")||
 q.includes("کوالیفکیشن")
+
 ){
 
 if(urdu){
 
 return(
+
 "CV میں اپنی education اس ترتیب سے لکھیں:\n\n"+
+
 "Qualification\n"+
+
 "Institution\n"+
+
 "Year / Result\n\n"+
+
 "مثال:\n"+
+
 "Intermediate (FA)\n"+
+
 "Government Higher Secondary School\n"+
+
 "2026"
+
 );
 
 }
 
 return(
+
 "Write education in this format:\n\n"+
+
 "Qualification\n"+
+
 "Institution\n"+
+
 "Year / Result\n\n"+
+
 "Example:\n"+
+
 "Intermediate (FA)\n"+
+
 "Government Higher Secondary School\n"+
+
 "2026"
+
 );
 
 }
@@ -1271,36 +1593,54 @@ return(
 /* CV IMPROVEMENT */
 
 if(
+
 q.includes("improve")||
 q.includes("better")||
 q.includes("cv")||
 q.includes("resume")||
 q.includes("بہتر")||
 q.includes("سی وی")
+
 ){
 
 if(urdu){
 
 return(
+
 "آپ کی CV بہتر بنانے کے لیے:\n\n"+
+
 "1. Professional Summary شامل کریں۔\n"+
+
 "2. Relevant skills لکھیں۔\n"+
+
 "3. Education واضح انداز میں لکھیں۔\n"+
+
 "4. Experience میں responsibilities لکھیں۔\n"+
+
 "5. Spelling اور contact information check کریں۔\n"+
+
 "6. CV کو مختصر اور صاف رکھیں۔"
+
 );
 
 }
 
 return(
+
 "To improve your CV:\n\n"+
+
 "1. Add a professional summary.\n"+
+
 "2. Include relevant skills.\n"+
+
 "3. Present education clearly.\n"+
+
 "4. Add responsibilities under experience.\n"+
+
 "5. Check spelling and contact information.\n"+
+
 "6. Keep the CV clean and concise."
+
 );
 
 }
@@ -1311,27 +1651,45 @@ return(
 if(urdu){
 
 return(
+
 "میں آپ کی CV اور career سے متعلق مدد کر سکتا ہوں۔ 😊\n\n"+
+
 "آپ مجھ سے پوچھ سکتے ہیں:\n\n"+
+
 "• میری CV بہتر کرو\n"+
+
 "• Professional Summary لکھو\n"+
+
 "• CV میں skills کیا لکھوں؟\n"+
+
 "• Job interview کی تیاری کرواؤ\n"+
+
 "• Education کیسے لکھوں؟\n"+
+
 "• میرے لیے مناسب job کون سی ہے؟"
+
 );
 
 }
 
 return(
+
 "I can help you with your CV and career. 😊\n\n"+
+
 "You can ask me:\n\n"+
+
 "• Improve my CV\n"+
+
 "• Write a professional summary\n"+
+
 "• What skills should I add?\n"+
+
 "• Help me prepare for an interview\n"+
+
 "• How should I write my education?\n"+
+
 "• What jobs may suit my skills?"
+
 );
 
 }
